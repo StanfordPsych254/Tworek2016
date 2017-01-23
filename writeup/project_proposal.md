@@ -1,7 +1,4 @@
----
-title: "Project proposal"
-output: html_document
----
+#Project proposal
 
 ##Justification
 

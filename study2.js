@@ -41,28 +41,88 @@ function shuffle (a)
 }
 
 // ############################## Configuration settings ##############################
-var sents = ['Although a lot about babies and adults is different, they still learn in basically the same way.', 'Children learn best when adults always reward them for correct answers or behaviors.', 
-'Babies learn by noticing patterns around them (e.g., mom always looks for her phone after the ringing noise).', 'Children of different ages learn in very different ways. For example, preschoolers learn differently from babies and toddlers.',
-'Newborn babies can see and hear and have some simple physical reflexes (e.g., blinking and sucking), but have almost no other knowledge.', 'Babies learn mostly from their own senses (e.g., touch, smell, taste) and physical exploration of the world.',
-'Children’s development happens in stages; at first they learn about simple things they can see, and then later on they learn about abstract things, such as numbers.', 'Babies are born with some knowledge about the world, including expectations about the people and objects around them.',
-'Children learn best from examples: if they are shown why an idea is right, or why a behavior is good, they can learn without rewards or punishments.','Children can learn about abstract concepts like good behavior from an early age.',
-'Babies learn by looking for things that feel and taste good (e.g., by putting things in their mouths).',
-'The most important thing for young children to learn is to control their impulses (e.g., waiting when told to wait).','If young children do not learn to control their behavior, they will not be able to learn or socialize normally later on.',
-'Babies learn most when they are surprised by the outcome an event (e.g., an object falling off the table when they push it).','Using baby-talk (i.e. talking in a sing-song voice) helps babies learn how to talk.',
-'Children learn fewer words when adults talk with a warm tone.', 'Babies should be able to see your face when you talk to them.','By the age of 3, children answer questions just as quickly as adults.',
-'Parents should not talk back when their toddlers use ‘baby-talk’ (like when they say “ba-ba” instead of “teddy bear”).','Pointing to things is one way that babies learn how to talk.',
-'Adults cannot have conversations with babies who can’t talk yet.','Children learn fewer words when they don’t pay attention to what you’re saying.','Parents need to know a lot of big words to teach children how to talk.',
-'You cannot teach children anything new by reading them the same book over and over.','Parents who have trouble reading can help their children learn how to read books.','Some books should be kept where babies can reach them.',
-'When reading with toddlers, you should always read all of the words on one page before moving on to the next page.','2-year-olds should do their best to listen quietly when you read to them.',
-'Children can learn from looking at books by themselves before they know how to read.','Saying numbers and counting are the only ways you can help toddlers get ready to learn math in school.',
-'Toddlers need to learn how to count before they can understand math.','Talking about the difference between tall and short teaches toddlers about math.','It’s best for children to wait until they are old enough for school to learn about math.',
-'Children are learning about math when they learn the names of different shapes (like triangles and squares).','Children who know fewer words when they start school will probably do worse in third grade than their classmates who know more words.','Talking to children cannot make them smarter.',
-'How many words 3-year-olds know can predict how well they might do in kindergarten.','Children should be told what to do instead of given choices.','How many words 3-year-olds know cannot predict how many new words they will learn during their lifetime.',
-'Talking to 3-year-olds can help them do better in school.','It’s the school’s responsibility to make sure children learn how to read and do math.','Watching educational TV is good for children of all ages.','Having conversations with adults while watching television can help 3-year-olds learn new words.',
-'The more television children under 2 watch by themselves the more words they learn.']; 
-sents = shuffle(sents); 
+var sents_inherence = [['We use red in traffic lights to mean "stop" because of something about the color red or about stop lights—maybe the color red inherently acts as a warning.','We use red in traffic lights to mean "stop" because of some historical or contextual reason— maybe the color was arbitrarily assigned to this meaning a long time ago and we simply continued using it since.'],
 
-var totalTrials = sents.length;
+['Parents and children sleep in different beds because of something about the parent-child relationship or about the act of sleeping in separate beds—maybe one of the critical components of the parent-child relationship is teaching children independence.', 'Parents and children sleep in different beds because of some historical or contextual reason— maybe it became popular to sleep in separate beds when wealthy people began to have nannies who would watch children at night.'],
+
+['Engagement rings typically have diamonds because of something about engagement rings or about diamonds—maybe diamonds\' rarity and value is a match for the value of romantic love.', 'Engagement rings typically have diamonds because of some historical or contextual reason— maybe some marketing campaigns from the past are responsible for the association of diamonds with romantic love.'],
+
+['Black is associated with funerals because of something about the color black or about funerals—maybe because the darkness of black conveys how people feel at funerals.', 'Black is associated with funerals because of some historical or contextual reason—maybe because an ancient people originated the practice for some idiosyncratic reason and then spread it to many parts of the world.'],
+
+['Toothpaste is flavored with mint because of something about toothpaste or about mint—maybe the tingling sensation of mint makes one\'s teeth and gums feel extra clean.', 'Toothpaste is flavored with mint because of some historical or contextual reason—maybe because mint was cheap and readily available in the US at the time modern toothpaste began being made.'],
+
+['There are 7 days in a week because of something about the quantity of 7 days or about the week as a marker of time—maybe the week is meant to align with phases of the moon, which are about 7 days long.', 'There are 7 days in a week because of some historical or contextual reason—maybe because ancient calendar-makers happened to pick this number and then the convention just continued.'],
+
+['Weekends consist of Saturday and Sunday because of something about weekends or about Saturday and Sunday—maybe Saturday and Sunday are holy days for many people, so people wouldn\'t be able to work.', 'Weekends consist of Saturday and Sunday because of some historical or contextual reason— maybe because the labor movement of the early 20th century made a push for more free time for workers.'],
+
+['Intelligent organisms on Earth have 2 arms and 2 legs because of something about intelligent organisms or about having 2 arms and 2 legs—maybe having 2 arms and 2 legs is the perfect balance between tool use and locomotion for intelligent organisms.', 'Intelligent organisms on Earth have 2 arms and 2 legs because of some historical or contextual reason—maybe because the animals they just happened to evolve from had similar appendages.'],
+
+['Intelligent organisms on Earth have eyes and ears because of something about intelligent organisms or about eyes and ears—maybe eyes and ears work well for perceiving the world.', 'Intelligent organisms on Earth have eyes and ears because of some historical or contextual reason—maybe because of some of the randomness of evolution, which means that other sensory organs would have been just as effective.'],
+
+['Intelligent organisms on Earth communicate through sound because of something about intelligent organisms or about communicating through sounds—maybe communicating through sound allows intelligent organisms to communicate over longer distances or while engaged in other activities.', 'Intelligent organisms on Earth communicate through sound because of some historical or contextual reason—maybe because the Earth\'s atmosphere just happens to support far-reaching sound transmission.'],
+
+['Dollar bills are green because of something about dollar bills or about the color green—maybe since green is the color of trees it symbolizes endurance and trust and thus was chosen for money.', 'Dollar bills are green because of some historical or contextual reason—maybe green dyes were plentiful and cheap when dollar bills were first made and then the tradition just continued.'],
+
+['We don\'t keep chipmunks as pets because of something about chipmunks or about pets—maybe because chipmunks don\'t like to be picked up or held.', 'We don\'t keep chipmunks as pets because of some historical or contextual reason—maybe because they happened to be absent from the geographical areas where humans started to domesticate animals thousands of years ago.'],
+
+['We drink orange juice for breakfast because of something about orange juice or about breakfast— maybe the citrus aroma is refreshing and helps us to wake up.', 'We drink orange juice for breakfast because of some historical or contextual reason—maybe because orange growers a long time ago promoted orange juice for breakfast in an effort to sell more oranges.'],
+
+['Pink is the color associated with girls because of something about the color pink or about girls— maybe because pink\'s flower-like appearance matches girls\' dainty nature.', 'Pink is the color associated with girls because of some historical or contextual reason—maybe because businesses promoted pink products for girls over the last century.'],
+
+['Wedding dresses are white because of something about the color white or about wedding dresses—maybe because the untainted nature of white reminds people of pure love.', 'Wedding dresses are white because of some historical or contextual reason—maybe because someone famous wore a white wedding dress, which started a trend that continues to this day.'],
+['Intelligent organisms on Earth fully pay attention when taking surveys because of something about intelligent organisms or about taking surveys—maybe paying attention allows intelligent organisms to contribute to research productively. For this item can you please choose choice five?', 'Intelligent organisms on Earth fully pay attention when taking surveys because of some historical or contextual reason— maybe because taking surveys became a popular way to make money with the rise of technology over time. For this item can you please choose choice three?']];
+
+sents_inherence = shuffle(sents_inherence); 
+
+var sents_ought_typical = [['Consider that children typically address their teachers with “Ms.,” “Mrs.,” or “Mr.”', 'Is it wrong or right for children address their teachers with “Ms.,” “Mrs.,” or “Mr.”?', 'Should children address their teachers with “Ms.,” “Mrs.,” or “Mr.”?'],
+
+['Think about how people often celebrate their birthdays with other people.', 'Is it wrong or right for people to celebrate their birthdays with other people?', 'Should people celebrate their birthdays with other people?'],
+
+['Think about how people often go watch a movie when they go on dates.', 'Is it wrong or right for people to go watch a movie when they go on dates?', 'Should people go watch a movie when they go on dates?'],
+
+['Think about how people typically give roses as gifts on Valentine\'s Day.', 'Is it wrong or right for people to give roses as gifts on Valentine’s Day?', 'Should people give roses as gifts on Valentine’s Day?'],
+
+['Think about how doctors usually wear white coats.', 'Is it wrong or right for doctors to wear white coats?', 'Should doctors wear white coats?'],
+
+['Think about how men and women typically have separate public bathrooms.', 'Is it wrong or right for men and women to have separate public bathrooms?', 'Should men and women have separate public bathrooms?'],
+
+['Think about how a lot of professionals wear dark-colored clothing.', 'Is it wrong or right for professionals to wear dark-colored clothing?', 'Should professionals wear dark-colored clothing?'],
+
+['Consider that people typically stand when the national anthem is played.', 'Is it wrong or right for people to stand when the national anthem is played?', 'Should people stand when the national anthem is played?'],
+
+['Consider that people often pay money to watch others play sports.', 'Is it wrong or right for people to pay money to watch others play sports?', 'Should people pay money to watch others play sports?'],
+
+['Consider that people generally shake hands when they first meet.', 'Is it wrong or right for people to shake hands when they first meet?', 'Should people shake hands when they first meet?'],
+
+['Consider that most men wear their hair short.', 'Is it wrong or right for men to wear their hair short?', 'Should men wear their hair short?'],
+
+['Consider that couples typically live in a different house than their relatives.', 'Is it wrong or right for couples to live in a different house than their relatives?', 'Should couples live in a different house than their relatives?']]
+
+var sent_ought_atypical = [['Consider that children don’t typically address their teachers by their first name.', 'Is it wrong or right for children to address their teachers by their first name?', 'Should children address their teachers by their first name?'],
+
+['Think about how people seldom celebrate their birthdays by themselves.', 'Is it wrong or right for people to celebrate their birthdays by themselves?', 'Should people celebrate their birthdays themselves?'],
+
+['Think about how people seldom go play video games when they go on dates.', 'Is it wrong or right for people go play video games when they go on dates?', 'Should people go play video games when they go on dates?'],
+
+['Think about how people don’t typically give sweaters as gifts on Valentine’s Day', 'Is it wrong or right for people to give sweaters as gifts on Valentine’s Day?', 'Should people give sweaters as gifts on Valentine’s Day?'],
+
+['Think about how doctors don’t usually wear purple coats.', 'Is it wrong or right for doctors to wear purple coats?', 'Should doctors wear purple coats?'],
+
+['Think about how men and women typically don’t share the same public bathrooms.', 'Is it wrong or right for men and women to share the same public bathrooms?', 'Should men and women share the same public bathrooms?'],
+
+['Think about how few professionals wear clothing that has bright colors or bold patterns.', 'Is it wrong or right for professionals to wear clothing that has bright colors or bold patterns?', 'Should professionals wear clothing that has bright colors or bold patterns?'],
+
+['Consider that people don’t typically stay seated when the national anthem is played.', 'Is it wrong or right for people to stay seated when the national anthem is played?', 'Should people stay seated when the national anthem is played?'],
+
+['Consider that people seldom pay money to watch others play video games.', 'Is it wrong or right for people to pay money to watch others play video games?', 'Should people pay money to watch others play video games?'],
+
+['Consider that people don’t generally touch elbows when they first meet.', 'Is it wrong or right for people to touch elbows when they first meet?', 'Should people touch elbows when they first meet?'],
+
+['Consider that few men wear their hair long.', 'Is it wrong or right for men to wear their hair long?', 'Should men wear their hair long?'],
+
+['Consider that couples don’t typically live in the same house as their relatives.', 'Is it wrong or right for couples to live in the same house as their relatives?', 'Should couples live in the same house as their relatives?']]
+
+var totalTrials = sents_inherence.length;
 
 // Show the instructions slide -- this is what we want subjects to see first.
 showSlide("instructions");
@@ -90,26 +150,33 @@ var experiment = {
 
     // LOG RESPONSE
     log_response: function() {
-  var response_logged = false;
+  var response_logged_i = false;
+  var response_logged_e = false;
   
   //Array of radio buttons
-  var radio = document.getElementsByName("judgment");
+  var radio_i = document.getElementsByName("judgment_i");
+  var radio_e = document.getElementsByName("judgment_e");
   
   // Loop through radio buttons
-  for (i = 0; i < radio.length; i++) {
-      if (radio[i].checked) {
-    experiment.data.rating.push(radio[i].value);
-    response_logged = true;       
+  for (i = 0; i < radio_i.length; i++) {
+      if (radio_i[i].checked) {
+    experiment.data.rating.push(radio_i[i].value);
+    response_logged_i = true;       
+      }
+      if (radio_e[i].checked) {
+    experiment.data.rating.push(radio_e[i].value);
+    response_logged_e = true;       
       }
   }
   
   
-  if (response_logged) {
+  if (response_logged_i & response_logged_e) {
       nextButton.blur();
       
       // uncheck radio buttons
-      for (i = 0; i < radio.length; i++) {
-    radio[i].checked = false
+      for (i = 0; i < radio_i.length; i++) {
+    radio_i[i].checked = false
+    radio_e[i].checked = false
       }
       experiment.next();
   } else {
@@ -126,12 +193,12 @@ var experiment = {
       
       $("#testMessage").html('');   // clear the test message
       $("#prog").attr("style","width:" +
-          String(100 * (1 - sents.length/totalTrials)) + "%")
+          String(100 * (1 - sents_inherence.length/totalTrials)) + "%")
 // style="width:progressTotal%"
       
       // Get the current trial - <code>shift()</code> removes the first element
       // select from our scales array and stop exp after we've exhausted all the domains
-      var sent = sents.shift();
+      var sent = sents_inherence.shift();
       
       //If the current trial is undefined, call the end function.
       if (typeof sent == "undefined") {
@@ -139,7 +206,8 @@ var experiment = {
       }
             
       // Display the sentence stimuli
-      $("#sentence").html(sent);
+      $("#sentence_intrinsic").html(sent[0]);
+      $("#sentence_extrinsic").html(sent[1]);
       
       
       // push all relevant variables into data object     

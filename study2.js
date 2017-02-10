@@ -31,7 +31,7 @@ function shuffle (a)
     var o = [];
     
     for (var i=0; i < a.length; i++) {
-  o[i] = a[i];
+      o[i] = a[i];
     }
     
     for (var j, x, i = o.length;
@@ -41,6 +41,7 @@ function shuffle (a)
 }
 
 // ############################## Configuration settings ##############################
+//prompts for inherence testing 
 var sents_inherence = [['We use red in traffic lights to mean "stop" because of something about the color red or about stop lights—maybe the color red inherently acts as a warning.','We use red in traffic lights to mean "stop" because of some historical or contextual reason— maybe the color was arbitrarily assigned to this meaning a long time ago and we simply continued using it since.'],
 
 ['Parents and children sleep in different beds because of something about the parent-child relationship or about the act of sleeping in separate beds—maybe one of the critical components of the parent-child relationship is teaching children independence.', 'Parents and children sleep in different beds because of some historical or contextual reason— maybe it became popular to sleep in separate beds when wealthy people began to have nannies who would watch children at night.'],
@@ -72,57 +73,46 @@ var sents_inherence = [['We use red in traffic lights to mean "stop" because of 
 ['Wedding dresses are white because of something about the color white or about wedding dresses—maybe because the untainted nature of white reminds people of pure love.', 'Wedding dresses are white because of some historical or contextual reason—maybe because someone famous wore a white wedding dress, which started a trend that continues to this day.'],
 ['Intelligent organisms on Earth fully pay attention when taking surveys because of something about intelligent organisms or about taking surveys—maybe paying attention allows intelligent organisms to contribute to research productively. For this item can you please choose choice five?', 'Intelligent organisms on Earth fully pay attention when taking surveys because of some historical or contextual reason— maybe because taking surveys became a popular way to make money with the rise of technology over time. For this item can you please choose choice three?']];
 
+//prompts for ought inferences
+var sents_ought = [[['Consider that children typically address their teachers with “Ms.,” “Mrs.,” or “Mr.”', 'Is it wrong or right for children address their teachers with “Ms.,” “Mrs.,” or “Mr.”?', 'Should children address their teachers with “Ms.,” “Mrs.,” or “Mr.”?'], ['Consider that children don’t typically address their teachers by their first name.', 'Is it wrong or right for children to address their teachers by their first name?', 'Should children address their teachers by their first name?']],
+
+//2
+[['Think about how people often celebrate their birthdays with other people.', 'Is it wrong or right for people to celebrate their birthdays with other people?', 'Should people celebrate their birthdays with other people?'], ['Think about how people seldom celebrate their birthdays by themselves.', 'Is it wrong or right for people to celebrate their birthdays by themselves?', 'Should people celebrate their birthdays themselves?']],
+
+//3
+[['Think about how people often go watch a movie when they go on dates.', 'Is it wrong or right for people to go watch a movie when they go on dates?', 'Should people go watch a movie when they go on dates?'], ['Think about how people seldom go play video games when they go on dates.', 'Is it wrong or right for people go play video games when they go on dates?', 'Should people go play video games when they go on dates?']],
+
+//4
+[['Think about how people typically give roses as gifts on Valentine\'s Day.', 'Is it wrong or right for people to give roses as gifts on Valentine’s Day?', 'Should people give roses as gifts on Valentine’s Day?'], ['Think about how people don’t typically give sweaters as gifts on Valentine’s Day', 'Is it wrong or right for people to give sweaters as gifts on Valentine’s Day?', 'Should people give sweaters as gifts on Valentine’s Day?']],
+
+//5
+[['Think about how doctors usually wear white coats.', 'Is it wrong or right for doctors to wear white coats?', 'Should doctors wear white coats?'], ['Think about how doctors don’t usually wear purple coats.', 'Is it wrong or right for doctors to wear purple coats?', 'Should doctors wear purple coats?']],
+
+//6
+[['Think about how men and women typically have separate public bathrooms.', 'Is it wrong or right for men and women to have separate public bathrooms?', 'Should men and women have separate public bathrooms?'], ['Think about how men and women typically don’t share the same public bathrooms.', 'Is it wrong or right for men and women to share the same public bathrooms?', 'Should men and women share the same public bathrooms?']],
+
+//7
+[['Think about how a lot of professionals wear dark-colored clothing.', 'Is it wrong or right for professionals to wear dark-colored clothing?', 'Should professionals wear dark-colored clothing?'], ['Think about how few professionals wear clothing that has bright colors or bold patterns.', 'Is it wrong or right for professionals to wear clothing that has bright colors or bold patterns?', 'Should professionals wear clothing that has bright colors or bold patterns?']],
+
+//8
+[['Consider that people typically stand when the national anthem is played.', 'Is it wrong or right for people to stand when the national anthem is played?', 'Should people stand when the national anthem is played?'], ['Consider that people don’t typically stay seated when the national anthem is played.', 'Is it wrong or right for people to stay seated when the national anthem is played?', 'Should people stay seated when the national anthem is played?']],
+
+//9
+[['Consider that people often pay money to watch others play sports.', 'Is it wrong or right for people to pay money to watch others play sports?', 'Should people pay money to watch others play sports?'], ['Consider that people seldom pay money to watch others play video games.', 'Is it wrong or right for people to pay money to watch others play video games?', 'Should people pay money to watch others play video games?']],
+
+//10
+[['Consider that people generally shake hands when they first meet.', 'Is it wrong or right for people to shake hands when they first meet?', 'Should people shake hands when they first meet?'], ['Consider that people don’t generally touch elbows when they first meet.', 'Is it wrong or right for people to touch elbows when they first meet?', 'Should people touch elbows when they first meet?']],
+
+//11
+[['Consider that most men wear their hair short.', 'Is it wrong or right for men to wear their hair short?', 'Should men wear their hair short?'], ['Consider that few men wear their hair long.', 'Is it wrong or right for men to wear their hair long?', 'Should men wear their hair long?']],
+
+//12
+[['Consider that couples typically live in a different house than their relatives.', 'Is it wrong or right for couples to live in a different house than their relatives?', 'Should couples live in a different house than their relatives?'], ['Consider that couples don’t typically live in the same house as their relatives.', 'Is it wrong or right for couples to live in the same house as their relatives?', 'Should couples live in the same house as their relatives?']]]
+
 sents_inherence = shuffle(sents_inherence); 
+sents_ought = shuffle(sents_ought);
 
-var sents_ought_typical = [['Consider that children typically address their teachers with “Ms.,” “Mrs.,” or “Mr.”', 'Is it wrong or right for children address their teachers with “Ms.,” “Mrs.,” or “Mr.”?', 'Should children address their teachers with “Ms.,” “Mrs.,” or “Mr.”?'],
-
-['Think about how people often celebrate their birthdays with other people.', 'Is it wrong or right for people to celebrate their birthdays with other people?', 'Should people celebrate their birthdays with other people?'],
-
-['Think about how people often go watch a movie when they go on dates.', 'Is it wrong or right for people to go watch a movie when they go on dates?', 'Should people go watch a movie when they go on dates?'],
-
-['Think about how people typically give roses as gifts on Valentine\'s Day.', 'Is it wrong or right for people to give roses as gifts on Valentine’s Day?', 'Should people give roses as gifts on Valentine’s Day?'],
-
-['Think about how doctors usually wear white coats.', 'Is it wrong or right for doctors to wear white coats?', 'Should doctors wear white coats?'],
-
-['Think about how men and women typically have separate public bathrooms.', 'Is it wrong or right for men and women to have separate public bathrooms?', 'Should men and women have separate public bathrooms?'],
-
-['Think about how a lot of professionals wear dark-colored clothing.', 'Is it wrong or right for professionals to wear dark-colored clothing?', 'Should professionals wear dark-colored clothing?'],
-
-['Consider that people typically stand when the national anthem is played.', 'Is it wrong or right for people to stand when the national anthem is played?', 'Should people stand when the national anthem is played?'],
-
-['Consider that people often pay money to watch others play sports.', 'Is it wrong or right for people to pay money to watch others play sports?', 'Should people pay money to watch others play sports?'],
-
-['Consider that people generally shake hands when they first meet.', 'Is it wrong or right for people to shake hands when they first meet?', 'Should people shake hands when they first meet?'],
-
-['Consider that most men wear their hair short.', 'Is it wrong or right for men to wear their hair short?', 'Should men wear their hair short?'],
-
-['Consider that couples typically live in a different house than their relatives.', 'Is it wrong or right for couples to live in a different house than their relatives?', 'Should couples live in a different house than their relatives?']]
-
-var sent_ought_atypical = [['Consider that children don’t typically address their teachers by their first name.', 'Is it wrong or right for children to address their teachers by their first name?', 'Should children address their teachers by their first name?'],
-
-['Think about how people seldom celebrate their birthdays by themselves.', 'Is it wrong or right for people to celebrate their birthdays by themselves?', 'Should people celebrate their birthdays themselves?'],
-
-['Think about how people seldom go play video games when they go on dates.', 'Is it wrong or right for people go play video games when they go on dates?', 'Should people go play video games when they go on dates?'],
-
-['Think about how people don’t typically give sweaters as gifts on Valentine’s Day', 'Is it wrong or right for people to give sweaters as gifts on Valentine’s Day?', 'Should people give sweaters as gifts on Valentine’s Day?'],
-
-['Think about how doctors don’t usually wear purple coats.', 'Is it wrong or right for doctors to wear purple coats?', 'Should doctors wear purple coats?'],
-
-['Think about how men and women typically don’t share the same public bathrooms.', 'Is it wrong or right for men and women to share the same public bathrooms?', 'Should men and women share the same public bathrooms?'],
-
-['Think about how few professionals wear clothing that has bright colors or bold patterns.', 'Is it wrong or right for professionals to wear clothing that has bright colors or bold patterns?', 'Should professionals wear clothing that has bright colors or bold patterns?'],
-
-['Consider that people don’t typically stay seated when the national anthem is played.', 'Is it wrong or right for people to stay seated when the national anthem is played?', 'Should people stay seated when the national anthem is played?'],
-
-['Consider that people seldom pay money to watch others play video games.', 'Is it wrong or right for people to pay money to watch others play video games?', 'Should people pay money to watch others play video games?'],
-
-['Consider that people don’t generally touch elbows when they first meet.', 'Is it wrong or right for people to touch elbows when they first meet?', 'Should people touch elbows when they first meet?'],
-
-['Consider that few men wear their hair long.', 'Is it wrong or right for men to wear their hair long?', 'Should men wear their hair long?'],
-
-['Consider that couples don’t typically live in the same house as their relatives.', 'Is it wrong or right for couples to live in the same house as their relatives?', 'Should couples live in the same house as their relatives?']]
-
-var totalTrials = sents_inherence.length;
+var totalTrials = sents_inherence.length + sents_ought.length;
 
 // Show the instructions slide -- this is what we want subjects to see first.
 showSlide("instructions");
@@ -132,102 +122,106 @@ var experiment = {
     
     // The object to be submitted.
     data: {
-  sent: [],
-  rating: [],
-  language: [],
-  children:[],
-  expt_aim: [],
-  expt_gen: [],
+      sent: [],
+      sent_ought: [],
+      rating: [],
+      language: [],
+      children:[],
+      expt_aim: [],
+      expt_gen: [],
     },
     
     // end the experiment
     end: function() {
-  showSlide("finished");
-  setTimeout(function() {
-      turk.submit(experiment.data)
-  }, 1500);
+      showSlide("finished");
+      setTimeout(function() {
+        turk.submit(experiment.data)
+      }, 1500);
     },
 
-    // LOG RESPONSE
-    log_response: function() {
-  var response_logged_i = false;
-  var response_logged_e = false;
-  
-  //Array of radio buttons
-  var radio_i = document.getElementsByName("judgment_i");
-  var radio_e = document.getElementsByName("judgment_e");
-  
-  // Loop through radio buttons
-  for (i = 0; i < radio_i.length; i++) {
-      if (radio_i[i].checked) {
-    experiment.data.rating.push(radio_i[i].value);
-    response_logged_i = true;       
-      }
-      if (radio_e[i].checked) {
-    experiment.data.rating.push(radio_e[i].value);
-    response_logged_e = true;       
-      }
-  }
-  
-  
-  if (response_logged_i & response_logged_e) {
-      nextButton.blur();
-      
-      // uncheck radio buttons
-      for (i = 0; i < radio_i.length; i++) {
-    radio_i[i].checked = false
-    radio_e[i].checked = false
-      }
-      experiment.next();
-  } else {
-      $("#testMessage").html('<font color="red">' + 
-           'Please make a response!' + 
-           '</font>');
-  }
+    // LOG RESPONSE FOR INHERENCE SECTION
+    log_response_inherence: function() {
+        var response_logged_i = false;
+        var response_logged_e = false;
+        
+        //Array of radio buttons
+        var radio_i = document.getElementsByName("judgment_i");
+        var radio_e = document.getElementsByName("judgment_e");
+        
+        // Loop through radio buttons
+        for (i = 0; i < radio_i.length; i++) {
+            if (radio_i[i].checked) {
+              experiment.data.rating.push(radio_i[i].value);
+              response_logged_i = true;       
+            }
+            if (radio_e[i].checked) {
+              experiment.data.rating.push(radio_e[i].value);
+              response_logged_e = true;       
+            }
+        }
+    
+        if (response_logged_i & response_logged_e) {
+            //nextButton.blur();
+          
+            // uncheck radio buttons
+            for (i = 0; i < radio_i.length; i++) {
+              radio_i[i].checked = false
+              radio_e[i].checked = false
+            }
+            experiment.next();
+            } 
+        else {
+            $("#testMessage").html('<font color="red">' + 'Please make a response!' + '</font>');
+          }
+    },
+
+    log_response_ought: function() {
+
     },
     
     // The work horse of the sequence - what to do on every trial.
     next: function() {
-  // Allow experiment to start if it's a turk worker OR if it's a test run
-  if (window.self == window.top | turk.workerId.length > 0) {
       
-      $("#testMessage").html('');   // clear the test message
-      $("#prog").attr("style","width:" +
-          String(100 * (1 - sents_inherence.length/totalTrials)) + "%")
-// style="width:progressTotal%"
-      
-      // Get the current trial - <code>shift()</code> removes the first element
-      // select from our scales array and stop exp after we've exhausted all the domains
-      var sent = sents_inherence.shift();
-      
-      //If the current trial is undefined, call the end function.
-      if (typeof sent == "undefined") {
-      return experiment.debriefing();
+        // Allow experiment to start if it's a turk worker OR if it's a test run
+        if (window.self == window.top | turk.workerId.length > 0) {
+        
+            $("#testMessage").html('');   // clear the test message
+            $("#prog").attr("style","width:" +
+                String(100 * (1 - (sents_inherence.length + sents_ought.length)/totalTrials)) + "%")
+
+        
+            // Get the current trial - <code>shift()</code> removes the first element
+            // select from our scales array and stop exp after we've exhausted all the domains
+            var sent = sents_inherence.shift();
+        
+            //If the current trial is undefined, call the end function.
+            if (typeof sent == "undefined") {
+              return experiment.debriefing();
+            }
+              
+            // Display the sentence stimuli
+            $("#sentence_intrinsic").html(sent[0]);
+            $("#sentence_extrinsic").html(sent[1]);
+        
+        
+            // push all relevant variables into data object     
+            experiment.data.sent.push(sent);
+        
+            showSlide("stage");
       }
-            
-      // Display the sentence stimuli
-      $("#sentence_intrinsic").html(sent[0]);
-      $("#sentence_extrinsic").html(sent[1]);
-      
-      
-      // push all relevant variables into data object     
-      experiment.data.sent.push(sent);
-      
-      showSlide("stage");
-  }
     },
 
     //  go to debriefing slide
     debriefing: function() {
-  showSlide("debriefing");
+        showSlide("debriefing");
     },
 
     // submitcomments function
     submit_comments: function() {
-  experiment.data.language.push(document.getElementById("homelang").value);
-  experiment.data.children.push(document.getElementById("childrenyn").value);
-  experiment.data.expt_aim.push(document.getElementById("expthoughts").value);
-  experiment.data.expt_gen.push(document.getElementById("expcomments").value);
-  experiment.end();
+      experiment.data.language.push(document.getElementById("homelang").value);
+      experiment.data.children.push(document.getElementById("childrenyn").value);
+      experiment.data.expt_aim.push(document.getElementById("expthoughts").value);
+      experiment.data.expt_gen.push(document.getElementById("expcomments").value);
+      experiment.end();
     }
 }

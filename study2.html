@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Child Development Survey</title>
+<title>Psychology Survey</title>
 <script src="jquery-1.11.2.min.js"></script>
+<script src="js/foundation/foundation.slider.js"></script>
 <script src="mmturkey-0.6.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="style.css" />
@@ -17,7 +18,7 @@
   <br>
   <img src="images/stanford.png" alt="Stanford University">
   <p id='logo-text'>Stanford Language and Cognition Lab</p>
-  <p class="block-text">In this experiment, you will read statements.
+  <p class="block-text">In this experiment, you will read statements and answer questions about them. There are four parts, each with slightly different instructions.
   </p>
   <button type="button" onclick="this.blur(); experiment.next()">Start</button>
   
@@ -39,8 +40,8 @@
   <a href="https://www.amazon.com/gp/help/customer/display.html?nodeId=16465241">here</a>.</p>
 </div>
 
-<!-- The stage slide. -->
-<div class="slide" id="stage">
+<!-- The slide for the inherence section. -->
+<div class="slide" id="inherence">
   
 <!--Progress bar -->
 <div class="progress">
@@ -112,7 +113,7 @@
 </div>
 
 <!--Ought inferences slides-->
- <div class="slide" id="ought_inferences">
+ <div class="slide" id="ought">
 
     <!--progress bar -->
     <div class="progress">
@@ -123,11 +124,17 @@
     <br>
   
     <div align="center">
-      <h5><b>How much do you agree with the following statements?</b></h5><br>
+      <h5><b>Read the prompt and answer the following questions.</b></h5><br>
     </div>
 
     <div align="center">
-      <p id ="sentence_descriptive">{{}}</p> 
+      <p id ="description">{{}}</p> 
+    </div>
+
+    <div class="range-slider" data-slider>
+      <span class="range-slider-handle" role="slider" tabindex="0"></span>
+      <span class="range-slider-active-segment"></span>
+      <input type="hidden">
     </div>
 
     <br>
@@ -144,11 +151,9 @@
       <p id ="question2">{{}}</p> 
     </div>
 
-
-
   <table align="center"><tr>
   <td align="center">
-  <button type="button" id="nextButton" onClick="experiment.log_response()"> next</button>
+  <button type="button" id="nextButton" onClick="experiment.log_response_ought()"> next</button>
          </td> 
       <tr><td align="center">
       <div id="testMessage"> </div>

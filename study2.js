@@ -24,20 +24,29 @@ Array.prototype.random = function() {
   return this[random(this.length)];
 }
 
-// shuffle function - from stackoverflow?
-// shuffle ordering of argument array -- are we missing a parenthesis?
-function shuffle (a) 
-{ 
-    var o = [];
-    
-    for (var i=0; i < a.length; i++) {
-      o[i] = a[i];
+//shuffle function, source = http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+function shuffle(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
     }
-    
-    for (var j, x, i = o.length;
-   i;
-   j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x); 
-    return o;
+    return array;
+}
+
+function shuffle_in_array(array) {
+    var new_array = [12][3];
+    for (var i = 0; i < array.length; i++){
+        var keep = Math.random;
+        if (keep < .5) {
+            new_array[i] = array[i][0];
+        }
+        else{
+          new_array[i] = array[i][1];
+        }
+    }
+    return new_array;
 }
 
 // ############################## Configuration settings ##############################
@@ -111,8 +120,15 @@ var sents_ought = [[['Consider that children typically address their teachers wi
 
 sents_inherence = shuffle(sents_inherence); 
 sents_ought = shuffle(sents_ought);
+//sents_ought = shuffle_in_array(sents_ought);
+//need to implement shuffling typical vs atypical
+
 
 var totalTrials = sents_inherence.length + sents_ought.length;
+
+//randomizes the order of the parts
+var parts = ['ought', 'inherence']; //add crt in later
+parts = shuffle(parts);
 
 // Show the instructions slide -- this is what we want subjects to see first.
 showSlide("instructions");
@@ -122,7 +138,7 @@ var experiment = {
     
     // The object to be submitted.
     data: {
-      sent: [],
+      prompts: [],
       sent_ought: [],
       rating: [],
       language: [],
@@ -176,7 +192,8 @@ var experiment = {
     },
 
     log_response_ought: function() {
-
+      //need to add in data logging
+      experiment.next(); 
     },
     
     // The work horse of the sequence - what to do on every trial.
@@ -189,25 +206,42 @@ var experiment = {
             $("#prog").attr("style","width:" +
                 String(100 * (1 - (sents_inherence.length + sents_ought.length)/totalTrials)) + "%")
 
-        
-            // Get the current trial - <code>shift()</code> removes the first element
-            // select from our scales array and stop exp after we've exhausted all the domains
-            var sent = sents_inherence.shift();
-        
-            //If the current trial is undefined, call the end function.
-            if (typeof sent == "undefined") {
+            //var prompts = sents_inherence.shift();
+            var prompts;
+            if (parts[0] == "inherence"){
+              prompts = sents_inherence.shift();
+              if (typeof prompts == "undefined"){
+                parts.shift();
+              }
+              else{
+                $("#sentence_intrinsic").html(prompts[0]);
+                $("#sentence_extrinsic").html(prompts[1]);
+                showSlide("inherence");
+              }
+            }
+            else if (parts[0] == "ought"){
+              prompts = sents_ought.shift();
+              if (typeof prompts == "undefined"){
+                parts.shift();
+              }
+              else{
+                $("#description").html(prompts[0][0]); //change to randomize between typical and atypical
+                $("#question1").html(prompts[0][1]);
+                $("#question2").html(prompts[0][1]);
+                showSlide("ought");
+              }
+            }
+            // else if (parts[0] == "crt"){
+            //   //get elements of crt
+            // }
+            
+            if (typeof parts == "undefined") {
               return experiment.debriefing();
             }
               
-            // Display the sentence stimuli
-            $("#sentence_intrinsic").html(sent[0]);
-            $("#sentence_extrinsic").html(sent[1]);
-        
-        
             // push all relevant variables into data object     
-            experiment.data.sent.push(sent);
+            experiment.data.prompts.push(prompts);
         
-            showSlide("stage");
       }
     },
 

@@ -137,7 +137,7 @@ var totalTrials = sents_inherence.length + sents_ought.length;
 
 //randomizes the order of the parts
 var parts = ['ought', 'inherence']; //add crt in later
-//parts = shuffle(parts);
+parts = shuffle(parts);
 
 // Show the instructions slide -- this is what we want subjects to see first.
 showSlide("instructions");
@@ -205,9 +205,9 @@ var experiment = {
     },
 
     log_response_ought: function() {
-      // if (slider_moved == false) {
-      //     $("#testMessage").html('<font color="red">' + 'Please make a response!' + '</font>');
-      // }
+      if (slider_moved == false) {
+          $("#testMessage").html('<font color="red">' + 'Please make a response!' + '</font>');
+      }
       //else{
         //need to add in data logging
         experiment.next();

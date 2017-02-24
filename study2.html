@@ -17,12 +17,9 @@
 <div class="slide" id="instructions">
   <br>
   <img src="images/stanford.png" alt="Stanford University">
-  <p id='logo-text'>Stanford Language and Cognition Lab</p>
-  <p class="block-text">In this experiment, you will read statements and answer questions about them. There are four parts, each with slightly different instructions.
+  <p class="block-text">In this experiment, you will read statements and answer questions about them. There are three parts, each with slightly different instructions.
   </p>
   <button type="button" onclick="this.blur(); experiment.next()">Start</button>
-  
-  <p class="block-text"><br> <b> Note: you won't be able to preview this HIT before accepting it because it's so short. </b></p>
   
   <p class="block-text" id="legal">By answering the
   following questions, you are participating in a study being performed by
@@ -131,12 +128,6 @@
       <p id ="description">{{}}</p> 
     </div>
 
-    <div class="range-slider" data-slider>
-      <span class="range-slider-handle" role="slider" tabindex="0"></span>
-      <span class="range-slider-active-segment"></span>
-      <input type="hidden">
-    </div>
-
     <br>
     <br>
 
@@ -144,12 +135,28 @@
       <p id ="question1">{{}}</p> 
     </div>
 
+    <span class="left">0</span> 
+    <span class="right">100</span>​
+    <span class="slider">
+      <input type="range" name="rangeInput1" min="0" max="100" onchange="experiment.record_slider_change" class="slider" id="range1">
+    </span>
+    <span class="left">Definitely no</span>
+    <span class="right">Definitely yes</span>​
+
     <br>
     <br>
 
     <div align="center">
       <p id ="question2">{{}}</p> 
     </div>
+
+    <span class="left">0</span> 
+    <span class="right">100</span>​
+    <span class="slider">
+      <input type="range" name="rangeInput2" min="0" max="100" onchange="experiment.record_slider_change" class="slider" id="range2">
+    </span>
+    <span class="left">Wrong</span>
+    <span class="right">Right</span>​
 
   <table align="center"><tr>
   <td align="center">
@@ -165,17 +172,20 @@
  <!-- The debriefing slide. -->
  <div class="slide" id="debriefing">
 
-  <p> What is your native/first language (i.e., the language that was primarily spoken at home when you were a child)? </p>
+  <p> What is your highest level of eduction? </p>
    <form onsubmit="experiment.submitcomments()">
-   <p>
-  <input type="text" id="homelang" name="lg" style="width:40%" value=""></textarea>
-   </p>
-
-  <p> Do you have children? (Yes/No) </p>
-   <form onsubmit="experiment.submitcomments()">
-   <p>
-  <input type="text" id="childrenyn" name="lg" style="width:40%" value=""></textarea>
-   </p>
+   <table align = "center"><tr>
+<td align="center">
+  <tr>
+    <td> </td>
+    <td><input type="radio" name="education" value = "1">Less than high school</td>
+    <td><input type="radio" name="education" value = "2">High school</td>
+    <td><input type="radio" name="education" value = "3">Some college</td>
+    <td><input type="radio" name="judgment_e" value = "4">College</td>
+    <td><input type="radio" name="judgment_e" value = "5">Graduate degree</td>
+    <td><input type="radio" name="judgment_e" value = "6">Doctoral (Ph.D, J.D., M.D.)</td>
+  </tr>
+</table>
 
    <p> What do you think this experiment was about? </p>
    <p>

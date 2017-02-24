@@ -127,3 +127,12 @@ label {
   display: block;
   margin: 0.5em auto;
 }  
+.left{
+	float:left;
+}
+.right{
+	float:right;
+}
+/*.slider{
+	width: 200px !important;
+}*/

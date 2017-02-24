@@ -35,18 +35,27 @@ function shuffle(array) {
     return array;
 }
 
-function shuffle_in_array(array) {
-    var new_array = [12][3];
-    for (var i = 0; i < array.length; i++){
-        var keep = Math.random;
-        if (keep < .5) {
-            new_array[i] = array[i][0];
-        }
-        else{
-          new_array[i] = array[i][1];
-        }
+function set_ought_array(array, n) {
+  var atypical_indices = get_unique_random_numbers(array.length, n);
+  for (var i = 0; i< array.length; i++){
+    if (atypical_indices.indexOf(i) != -1){
+        var temp = array[i][0];
+        array[i][0] = array[i][1];
+        array[i][1] = temp;
     }
-    return new_array;
+  }
+  return array;
+}
+
+//adapted from http://stackoverflow.com/questions/2380019/generate-unique-random-numbers-between-1-and-100 
+function get_unique_random_numbers(upper, n) {
+  var arr = []
+  while(arr.length < 6){
+    var randomnumber = Math.floor(Math.random()*12)
+    if(arr.indexOf(randomnumber) > -1) continue;
+    arr[arr.length] = randomnumber;
+  }
+  return arr;
 }
 
 // ############################## Configuration settings ##############################
@@ -120,7 +129,7 @@ var sents_ought = [[['Consider that children typically address their teachers wi
 
 sents_inherence = shuffle(sents_inherence); 
 sents_ought = shuffle(sents_ought);
-//sents_ought = shuffle_in_array(sents_ought);
+sents_ought = set_ought_array(sents_ought, 6);
 //need to implement shuffling typical vs atypical
 
 
@@ -128,14 +137,14 @@ var totalTrials = sents_inherence.length + sents_ought.length;
 
 //randomizes the order of the parts
 var parts = ['ought', 'inherence']; //add crt in later
-parts = shuffle(parts);
+//parts = shuffle(parts);
 
 // Show the instructions slide -- this is what we want subjects to see first.
 showSlide("instructions");
 
+var slider_moved = false;
 // ############################## The main event ##############################
 var experiment = {
-    
     // The object to be submitted.
     data: {
       prompts: [],
@@ -153,6 +162,10 @@ var experiment = {
       setTimeout(function() {
         turk.submit(experiment.data)
       }, 1500);
+    },
+
+    record_slider_change: function() {
+        slider_moved = true;
     },
 
     // LOG RESPONSE FOR INHERENCE SECTION
@@ -192,8 +205,13 @@ var experiment = {
     },
 
     log_response_ought: function() {
-      //need to add in data logging
-      experiment.next(); 
+      // if (slider_moved == false) {
+      //     $("#testMessage").html('<font color="red">' + 'Please make a response!' + '</font>');
+      // }
+      //else{
+        //need to add in data logging
+        experiment.next();
+      //}
     },
     
     // The work horse of the sequence - what to do on every trial.

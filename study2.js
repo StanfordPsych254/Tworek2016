@@ -136,20 +136,24 @@ sents_ought = set_ought_array(sents_ought, 6);
 var totalTrials = sents_inherence.length + sents_ought.length;
 
 //randomizes the order of the parts
-var parts = ['ought', 'inherence']; //add crt in later
-parts = shuffle(parts);
+var parts = ['ought'];//, 'inherence']; //add crt in later
+//parts = shuffle(parts);
 
 // Show the instructions slide -- this is what we want subjects to see first.
 showSlide("instructions");
 
-var slider_moved = false;
+var slider_rightwrong_moved = false;
+var slider_should_moved = false;
 // ############################## The main event ##############################
 var experiment = {
     // The object to be submitted.
     data: {
       prompts: [],
       sent_ought: [],
-      rating: [],
+      intrinsic: [],
+      extrinsic: [],
+      should: [],
+      rightwrong: [],
       language: [],
       children:[],
       expt_aim: [],
@@ -164,8 +168,13 @@ var experiment = {
       }, 1500);
     },
 
-    record_slider_change: function() {
-        slider_moved = true;
+
+    record_rightwrong_slider_change: function() {
+        slider_rightwrong_moved = true;
+    },
+
+    record_should_slider_change: function() {
+        slider_should_moved = true;
     },
 
     // LOG RESPONSE FOR INHERENCE SECTION
@@ -180,11 +189,11 @@ var experiment = {
         // Loop through radio buttons
         for (i = 0; i < radio_i.length; i++) {
             if (radio_i[i].checked) {
-              experiment.data.rating.push(radio_i[i].value);
+              experiment.data.intrinsic.push(radio_i[i].value);
               response_logged_i = true;       
             }
             if (radio_e[i].checked) {
-              experiment.data.rating.push(radio_e[i].value);
+              experiment.data.extrinsic.push(radio_e[i].value);
               response_logged_e = true;       
             }
         }
@@ -205,13 +214,22 @@ var experiment = {
     },
 
     log_response_ought: function() {
-      if (slider_moved == false) {
-          $("#testMessage").html('<font color="red">' + 'Please make a response!' + '</font>');
+      var slider_should = document.getElementsByName("rangeInputShould");
+      var slider_rightwrong = document.getElementsByName("rangeInputRightWrong");
+      if (slider_should_moved == false | slider_rightwrong_moved == false) {
+          $("#testSliderMessage").html('<font color="red">' + 'Please make a response!' + '</font>');
       }
-      //else{
-        //need to add in data logging
+      else{
+        //push data
+        experiment.data.should.push(slider_should.value);
+        experiment.data.rightwrong.push(slider_rightwrong.value);
+
+        //reset sliders
+        slider_should.value = slider_should.defaultValue;
+        slider_rightwrong.value = slider_should.defaultValue;
+
         experiment.next();
-      //}
+      }
     },
     
     // The work horse of the sequence - what to do on every trial.
@@ -221,8 +239,12 @@ var experiment = {
         if (window.self == window.top | turk.workerId.length > 0) {
         
             $("#testMessage").html('');   // clear the test message
-            $("#prog").attr("style","width:" +
-                String(100 * (1 - (sents_inherence.length + sents_ought.length)/totalTrials)) + "%")
+            $("#testSliderMessage").html('');   // clear the test message
+            $("#progress_inherence").attr("style","width:" +
+                String(100 * (1 - (sents_inherence.length + sents_ought.length)/totalTrials)) + "%");
+            $("#progress_ought").attr("style","width:" +
+                String(100 * (1 - (sents_inherence.length + sents_ought.length)/totalTrials)) + "%");
+
 
             //var prompts = sents_inherence.shift();
             var prompts;
@@ -238,6 +260,11 @@ var experiment = {
               }
             }
             else if (parts[0] == "ought"){
+              slider_rightwrong_moved = false;
+              slider_should_moved = false;
+
+              document.getElementsByName("rangeInputShould").value = 50;
+              document.getElementsByName("rangeInputRightWrong").value = 50;
               prompts = sents_ought.shift();
               if (typeof prompts == "undefined"){
                 parts.shift();
@@ -245,7 +272,7 @@ var experiment = {
               else{
                 $("#description").html(prompts[0][0]); //change to randomize between typical and atypical
                 $("#question1").html(prompts[0][1]);
-                $("#question2").html(prompts[0][1]);
+                $("#question2").html(prompts[0][2]);
                 showSlide("ought");
               }
             }
@@ -253,7 +280,7 @@ var experiment = {
             //   //get elements of crt
             // }
             
-            if (typeof parts == "undefined") {
+            if (parts.length == 0) {
               return experiment.debriefing();
             }
               

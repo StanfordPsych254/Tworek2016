@@ -19,8 +19,9 @@
   <img src="images/stanford.png" alt="Stanford University">
   <p class="block-text">In this experiment, you will read statements and answer questions about them. There are three parts, each with slightly different instructions.
   </p>
-  <button type="button" onclick="this.blur(); experiment.next()">Start</button>
-  
+  <!--<button type="button" onclick="this.blur(); experiment.next()">Start</button> -->
+
+  <button type="button" onclick="this.blur(); experiment.debriefing()">Start</button>
   <p class="block-text" id="legal">By answering the
   following questions, you are participating in a study being performed by
   cognitive scientists in the Stanford Department of Psychology. If you have
@@ -42,7 +43,7 @@
   
 <!--Progress bar -->
 <div class="progress">
-    <div id="prog" class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:0%"></div>
+    <div id="progress_inherence" class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:0%"></div>
   </div>
   <br>
   
@@ -114,7 +115,7 @@
 
     <!--progress bar -->
     <div class="progress">
-        <div id="prog" class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+        <div id="progress_ought" class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:0%">
         </div>
     </div>
 
@@ -138,7 +139,7 @@
     <span class="left">0</span> 
     <span class="right">100</span>​
     <span class="slider">
-      <input type="range" name="rangeInput1" min="0" max="100" onchange="experiment.record_slider_change" class="slider" id="range1">
+      <input type="range" name="rangeInputRightWrong" min="0" max="100" defaultValue = "50" onchange="experiment.record_rightwrong_slider_change()" class="slider" id="range1">
     </span>
     <span class="left">Definitely no</span>
     <span class="right">Definitely yes</span>​
@@ -153,7 +154,7 @@
     <span class="left">0</span> 
     <span class="right">100</span>​
     <span class="slider">
-      <input type="range" name="rangeInput2" min="0" max="100" onchange="experiment.record_slider_change" class="slider" id="range2">
+      <input type="range" name="rangeInputShould" min="0" max="100" onchange="experiment.record_should_slider_change()" class="slider" id="range2">
     </span>
     <span class="left">Wrong</span>
     <span class="right">Right</span>​
@@ -163,7 +164,7 @@
   <button type="button" id="nextButton" onClick="experiment.log_response_ought()"> next</button>
          </td> 
       <tr><td align="center">
-      <div id="testMessage"> </div>
+      <div id="testSliderMessage"> </div>
       </td></tr>
 
  </table>
@@ -172,36 +173,47 @@
  <!-- The debriefing slide. -->
  <div class="slide" id="debriefing">
 
-  <p> What is your highest level of eduction? </p>
+  <p> What is your highest level of education? </p>
    <form onsubmit="experiment.submitcomments()">
-   <table align = "center"><tr>
-<td align="center">
-  <tr>
-    <td> </td>
-    <td><input type="radio" name="education" value = "1">Less than high school</td>
-    <td><input type="radio" name="education" value = "2">High school</td>
-    <td><input type="radio" name="education" value = "3">Some college</td>
-    <td><input type="radio" name="judgment_e" value = "4">College</td>
-    <td><input type="radio" name="judgment_e" value = "5">Graduate degree</td>
-    <td><input type="radio" name="judgment_e" value = "6">Doctoral (Ph.D, J.D., M.D.)</td>
-  </tr>
+   <table align = "center">
+    <tr>
+      <th><input type="radio" name="education" value = "1">Less than high school</th>
+    </tr>
+    <tr>
+      <th><input type="radio" name="education" value = "2">High school</th>
+    </tr>
+    <tr>
+      <th><input type="radio" name="education" value = "3">Some college</th>
+    </tr>
+    <tr>
+      <th><input type="radio" name="education" value = "4">College</th>
+    </tr>
+    <tr>
+      <th><input type="radio" name="education" value = "5">Graduate degree</th>
+      </tr>
+    <tr>
+      <th><input type="radio" name="education" value = "6">Doctoral (Ph.D, J.D., M.D.)<th>
+      </tr>
 </table>
 
-   <p> What do you think this experiment was about? </p>
-   <p>
-  <textarea type="text" id="expthoughts" style="width:100%" name="expaim"></textarea>
-   </p>
-
-   <p> Any general comments about the experiment? </p>
-   <p>
-   <textarea type="textarea" id="expcomments" style="width:100%" name="expgen"></textarea>
-   </p>
-  </form>
-  
-  <div align="center">
-    <button type="button" id="debriefsubmit" onClick="experiment.submit_comments()">Submit</button>
-  </div>
-  </div>
+   <p> How would you describe your political attitudes?</p>
+   <p>1 = strongly liberal; 9 = strongly conservative</p>
+      <table align = "center"><tr>
+        <td align="center">
+        <tr>
+          <td> </td>
+          <td><input type="radio" name="political" value = "1">1</td>
+          <td><input type="radio" name="political" value = "2">2</td>
+          <td><input type="radio" name="political" value = "3">3</td>
+          <td><input type="radio" name="political" value = "4">4</td>
+          <td><input type="radio" name="political" value = "5">5</td>
+          <td><input type="radio" name="political" value = "6">6</td>
+          <td><input type="radio" name="political" value = "7">7</td>
+          <td><input type="radio" name="political" value = "8">8</td>
+          <td><input type="radio" name="political" value = "9">9</td>
+        </tr>
+      </table>
+</div>
   
 <!-- The finish slide. -->
 <div class="slide" id="finished">

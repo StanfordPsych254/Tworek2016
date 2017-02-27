@@ -17,11 +17,12 @@
 <div class="slide" id="instructions">
   <br>
   <img src="images/stanford.png" alt="Stanford University">
-  <p class="block-text">In this experiment, you will read statements and answer questions about them. There are three parts, each with slightly different instructions.
-  </p>
-  <!--<button type="button" onclick="this.blur(); experiment.next()">Start</button> -->
+  <br>
+  <br>
+  <p class="block-text">In this experiment, you will read statements and answer questions about different human behaviors. </p>
 
-  <button type="button" onclick="this.blur(); experiment.debriefing()">Start</button>
+  <button type="button" onclick="this.blur(); experiment.next()">Start</button> 
+
   <p class="block-text" id="legal">By answering the
   following questions, you are participating in a study being performed by
   cognitive scientists in the Stanford Department of Psychology. If you have
@@ -170,8 +171,45 @@
  </table>
  </div>
 
- <!-- The debriefing slide. -->
- <div class="slide" id="debriefing">
+ <!--CRT slide-->
+ <div class="slide" id="crt">
+
+    <!--progress bar -->
+    <div class="progress">
+        <div id="progress_crt" class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+        </div>
+    </div>
+
+    <br>
+  
+    <div align="center">
+      <h5><b>Read the question and record your answer in the text box.</b></h5><br>
+    </div>
+
+    <div align="center">
+      <p id ="crt_question">{{}}</p> 
+    </div>
+
+    <div align="center">
+      <input type="text" id="crt_answer" name="crt_answer" style="width:40%"></input>
+   </div>
+
+    <br>
+    <br>
+
+  <table align="center"><tr>
+  <td align="center">
+  <button type="button" id="nextButton" onClick="experiment.log_response_crt()"> next</button>
+         </td> 
+      <tr><td align="center">
+      <div id="testCRTMessage"> </div>
+      </td></tr>
+
+ </table>
+ </div>
+
+ <!-- The demographic info slide. -->
+ <div class="slide" id="demographic">
 
   <p> What is your highest level of education? </p>
    <form onsubmit="experiment.submitcomments()">
@@ -180,16 +218,16 @@
       <th><input type="radio" name="education" value = "1">Less than high school</th>
     </tr>
     <tr>
-      <th><input type="radio" name="education" value = "2">High school</th>
+      <th><input type="radio" name="education" value = "2">High school/GED</th>
     </tr>
     <tr>
       <th><input type="radio" name="education" value = "3">Some college</th>
     </tr>
     <tr>
-      <th><input type="radio" name="education" value = "4">College</th>
+      <th><input type="radio" name="education" value = "4">Bachelor's (B.A., B.S.)</th>
     </tr>
     <tr>
-      <th><input type="radio" name="education" value = "5">Graduate degree</th>
+      <th><input type="radio" name="education" value = "5">Master's (M.A., M.S.)</th>
       </tr>
     <tr>
       <th><input type="radio" name="education" value = "6">Doctoral (Ph.D, J.D., M.D.)<th>
@@ -197,7 +235,7 @@
 </table>
 
    <p> How would you describe your political attitudes?</p>
-   <p>1 = strongly liberal; 9 = strongly conservative</p>
+   <p>1 = strongly liberal; 5 = Moderate; 9 = strongly conservative</p>
       <table align = "center"><tr>
         <td align="center">
         <tr>
@@ -213,6 +251,16 @@
           <td><input type="radio" name="political" value = "9">9</td>
         </tr>
       </table>
+
+    <!--Next button-->
+    <table align="center"><tr>
+    <td align="center">
+    <button type="button" id="endButton" onClick="experiment.log_response_demographic()">next</button>
+           </td> 
+        <tr><td align="center">
+        <div id="testDemographicMessage"> </div>
+        </td></tr>
+    </table>
 </div>
   
 <!-- The finish slide. -->

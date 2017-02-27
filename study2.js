@@ -59,6 +59,14 @@ function get_unique_random_numbers(upper, n) {
 }
 
 // ############################## Configuration settings ##############################
+
+//prompts for CRT
+var sents_crt = ['If it takes 2 nurses 2 minutes to measure the blood pressure of 2 patients, how long would it take 200 nurses to measure the blood pressure of 200 patients?',
+
+'Soup and salad cost $5.50 in total. The soup costs a dollar more than the salad. How much does the salad cost?',
+
+'Sally is making sun tea. Every hour, the concentration of the tea doubles. If it takes 6 hours for the tea to be ready, how long would it take for the tea to reach half of the final concentration?'];
+
 //prompts for inherence testing 
 var sents_inherence = [['We use red in traffic lights to mean "stop" because of something about the color red or about stop lights—maybe the color red inherently acts as a warning.','We use red in traffic lights to mean "stop" because of some historical or contextual reason— maybe the color was arbitrarily assigned to this meaning a long time ago and we simply continued using it since.'],
 
@@ -125,25 +133,27 @@ var sents_ought = [[['Consider that children typically address their teachers wi
 [['Consider that most men wear their hair short.', 'Is it wrong or right for men to wear their hair short?', 'Should men wear their hair short?'], ['Consider that few men wear their hair long.', 'Is it wrong or right for men to wear their hair long?', 'Should men wear their hair long?']],
 
 //12
-[['Consider that couples typically live in a different house than their relatives.', 'Is it wrong or right for couples to live in a different house than their relatives?', 'Should couples live in a different house than their relatives?'], ['Consider that couples don’t typically live in the same house as their relatives.', 'Is it wrong or right for couples to live in the same house as their relatives?', 'Should couples live in the same house as their relatives?']]]
+[['Consider that couples typically live in a different house than their relatives.', 'Is it wrong or right for couples to live in a different house than their relatives?', 'Should couples live in a different house than their relatives?'], ['Consider that couples don’t typically live in the same house as their relatives.', 'Is it wrong or right for couples to live in the same house as their relatives?', 'Should couples live in the same house as their relatives?']]];
 
 sents_inherence = shuffle(sents_inherence); 
 sents_ought = shuffle(sents_ought);
+sent_crt = shuffle(sents_crt);
 sents_ought = set_ought_array(sents_ought, 6);
 //need to implement shuffling typical vs atypical
 
 
-var totalTrials = sents_inherence.length + sents_ought.length;
+var totalTrials = sents_inherence.length + sents_ought.length + sents_crt.length;
 
 //randomizes the order of the parts
-var parts = ['ought'];//, 'inherence']; //add crt in later
-//parts = shuffle(parts);
+var parts = ['crt', 'ought', 'inherence'];
+parts = shuffle(parts);
 
 // Show the instructions slide -- this is what we want subjects to see first.
 showSlide("instructions");
 
 var slider_rightwrong_moved = false;
 var slider_should_moved = false;
+
 // ############################## The main event ##############################
 var experiment = {
     // The object to be submitted.
@@ -154,6 +164,9 @@ var experiment = {
       extrinsic: [],
       should: [],
       rightwrong: [],
+      education: [],
+      political: [],
+      crt: [],
       language: [],
       children:[],
       expt_aim: [],
@@ -168,6 +181,12 @@ var experiment = {
       }, 1500);
     },
 
+    hide_test_messages: function() {
+        $("#testMessage").html('');   // clear the test message
+        $("#testSliderMessage").html('');   // clear the test message
+        $("#testCRTMessage").html('');   // clear the test message
+    },
+
 
     record_rightwrong_slider_change: function() {
         slider_rightwrong_moved = true;
@@ -175,6 +194,18 @@ var experiment = {
 
     record_should_slider_change: function() {
         slider_should_moved = true;
+    },
+
+    log_response_crt: function() {
+        var crt_answer = document.getElementById("crt_answer");
+        var answer_text = crt_answer.value;
+        if (answer_text == "") {
+          $("#testCRTMessage").html('<font color="red">' + 'Please make a response!' + '</font>');
+        }
+        else {
+          crt_answer.value = "";
+          experiment.next();
+        }
     },
 
     // LOG RESPONSE FOR INHERENCE SECTION
@@ -214,8 +245,8 @@ var experiment = {
     },
 
     log_response_ought: function() {
-      var slider_should = document.getElementsByName("rangeInputShould");
-      var slider_rightwrong = document.getElementsByName("rangeInputRightWrong");
+      var slider_should = document.getElementById("range1");
+      var slider_rightwrong = document.getElementById("range2");
       if (slider_should_moved == false | slider_rightwrong_moved == false) {
           $("#testSliderMessage").html('<font color="red">' + 'Please make a response!' + '</font>');
       }
@@ -231,6 +262,34 @@ var experiment = {
         experiment.next();
       }
     },
+
+    log_response_demographic: function() {
+        var response_logged_ed = false;
+        var response_logged_political = false;
+
+        var radio_ed = document.getElementsByName("education");
+        var radio_political = document.getElementsByName("political");
+
+        for (i = 0; i < radio_ed.length; i++) {
+            if (radio_ed[i].checked) {
+                experiment.data.education.push(radio_ed[i].value);
+                response_logged_ed = true;
+            }
+        }
+        for (i = 0; i < radio_political.length; i++) {
+            if (radio_political[i].checked) {
+                experiment.data.political.push(radio_political[i].value);
+                response_logged_political = true;
+            }
+        }
+
+        if (response_logged_political == false| response_logged_ed == false) {
+            $("#testDemographicMessage").html('<font color="red">' + 'Please make a response!' + '</font>');
+        }
+        else {
+          experiment.end();
+        }
+    },
     
     // The work horse of the sequence - what to do on every trial.
     next: function() {
@@ -238,61 +297,26 @@ var experiment = {
         // Allow experiment to start if it's a turk worker OR if it's a test run
         if (window.self == window.top | turk.workerId.length > 0) {
         
-            $("#testMessage").html('');   // clear the test message
-            $("#testSliderMessage").html('');   // clear the test message
-            $("#progress_inherence").attr("style","width:" +
-                String(100 * (1 - (sents_inherence.length + sents_ought.length)/totalTrials)) + "%");
-            $("#progress_ought").attr("style","width:" +
-                String(100 * (1 - (sents_inherence.length + sents_ought.length)/totalTrials)) + "%");
-
-
-            //var prompts = sents_inherence.shift();
-            var prompts;
+            experiment.hide_test_messages();
+            experiment.display_progress_bars();
+            
             if (parts[0] == "inherence"){
-              prompts = sents_inherence.shift();
-              if (typeof prompts == "undefined"){
-                parts.shift();
-              }
-              else{
-                $("#sentence_intrinsic").html(prompts[0]);
-                $("#sentence_extrinsic").html(prompts[1]);
-                showSlide("inherence");
-              }
+                experiment.run_inherence_section();
             }
             else if (parts[0] == "ought"){
-              slider_rightwrong_moved = false;
-              slider_should_moved = false;
-
-              document.getElementsByName("rangeInputShould").value = 50;
-              document.getElementsByName("rangeInputRightWrong").value = 50;
-              prompts = sents_ought.shift();
-              if (typeof prompts == "undefined"){
-                parts.shift();
-              }
-              else{
-                $("#description").html(prompts[0][0]); //change to randomize between typical and atypical
-                $("#question1").html(prompts[0][1]);
-                $("#question2").html(prompts[0][2]);
-                showSlide("ought");
-              }
+                experiment.run_ought_section();
             }
-            // else if (parts[0] == "crt"){
-            //   //get elements of crt
-            // }
-            
+            else if (parts[0] == "crt") {
+                experiment.run_crt_section();
+            }
+
             if (parts.length == 0) {
-              return experiment.debriefing();
+              experiment.run_demographic_section();
             }
               
             // push all relevant variables into data object     
-            experiment.data.prompts.push(prompts);
-        
+            //experiment.data.prompts.push(prompts);
       }
-    },
-
-    //  go to debriefing slide
-    debriefing: function() {
-        showSlide("debriefing");
     },
 
     // submitcomments function
@@ -302,5 +326,65 @@ var experiment = {
       experiment.data.expt_aim.push(document.getElementById("expthoughts").value);
       experiment.data.expt_gen.push(document.getElementById("expcomments").value);
       experiment.end();
+    },
+
+    display_progress_bars: function() {
+        $("#progress_inherence").attr("style","width:" +
+                String(100 * (1 - (sents_inherence.length + sents_ought.length + sents_crt.length)/totalTrials)) + "%");
+        $("#progress_ought").attr("style","width:" +
+                String(100 * (1 - (sents_inherence.length + sents_ought.length + sents_crt.length)/totalTrials)) + "%");
+        $("#progress_crt").attr("style","width:" +
+                String(100 * (1 - (sents_inherence.length + sents_ought.length + sents_crt.length)/totalTrials)) + "%");
+    },
+
+    run_inherence_section: function() {
+        var prompts = sents_inherence.shift();
+        if (typeof prompts == "undefined"){
+          parts.shift();
+        }
+        else{
+          $("#sentence_intrinsic").html(prompts[0]);
+          $("#sentence_extrinsic").html(prompts[1]);
+          showSlide("inherence");
+        }
+    },
+
+    run_ought_section: function() {
+        slider_rightwrong_moved = false;
+        slider_should_moved = false;
+
+        document.getElementsByName("rangeInputShould").value = 50;
+        document.getElementsByName("rangeInputRightWrong").value = 50;
+
+        var prompts = sents_ought.shift();
+        if (typeof prompts == "undefined"){
+          parts.shift();
+        }
+        else{
+          $("#description").html(prompts[0][0]); //change to randomize between typical and atypical
+          $("#question1").html(prompts[0][1]);
+          $("#question2").html(prompts[0][2]);
+          showSlide("ought");
+        }
+    },
+
+    run_crt_section: function() {
+        var prompts = sents_crt.shift();
+
+        if (typeof prompts == "undefined") {
+          parts.shift();
+        }
+        else {
+          $("#crt_question").html(prompts);
+          showSlide("crt");
+        }
+    },
+
+    run_demographic_section: function() {
+      showSlide("demographic");
+    },
+
+    end: function() {
+      showSlide("finished");
     }
 }

@@ -166,11 +166,7 @@ var experiment = {
       rightwrong: [],
       education: [],
       political: [],
-      crt: [],
-      language: [],
-      children:[],
-      expt_aim: [],
-      expt_gen: [],
+      crt: []
     },
     
     // end the experiment
@@ -341,6 +337,7 @@ var experiment = {
         var prompts = sents_inherence.shift();
         if (typeof prompts == "undefined"){
           parts.shift();
+          experiment.next();
         }
         else{
           $("#sentence_intrinsic").html(prompts[0]);
@@ -359,6 +356,7 @@ var experiment = {
         var prompts = sents_ought.shift();
         if (typeof prompts == "undefined"){
           parts.shift();
+          experiment.next();
         }
         else{
           $("#description").html(prompts[0][0]); //change to randomize between typical and atypical
@@ -373,6 +371,7 @@ var experiment = {
 
         if (typeof prompts == "undefined") {
           parts.shift();
+          experiment.next();
         }
         else {
           $("#crt_question").html(prompts);
@@ -386,5 +385,10 @@ var experiment = {
 
     end: function() {
       showSlide("finished");
+      
+      var file = '/data.json';
+      jsonfile.writeFile(file, experiment.data, function (err) {
+        console.error(err);
+      })
     }
 }

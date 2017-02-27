@@ -133,6 +133,13 @@ label {
 .right{
 	float:right;
 }
+.checkboxgroup {
+  display: inline-block;
+  text-align: center;
+}
+.checkboxgroup label {
+  display: block;
+}
 /*.slider{
 	width: 200px !important;
 }*/

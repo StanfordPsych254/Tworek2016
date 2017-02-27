@@ -21,7 +21,7 @@
   <br>
   <p class="block-text">In this experiment, you will read statements and answer questions about different human behaviors. </p>
 
-  <button type="button" onclick="this.blur(); experiment.next()">Start</button> 
+  <button type="button" onclick="this.blur(); experiment.start()">Start</button> 
 
   <p class="block-text" id="legal">By answering the
   following questions, you are participating in a study being performed by
@@ -51,10 +51,11 @@
   <!-- Prompts and radio buttons -->
 <div align="center">
   <h5><b>How much do you agree with the following statements?</b></h5><br>
-  <h5><b>1 = Strongly disagree; 9 = Strongly agree</b></h5><br>
+  <!--<h5><b>1 = Strongly disagree; 9 = Strongly agree</b></h5><br>-->
 </div>
 <div align="center">
   <p id ="sentence_intrinsic">{{}}</p> 
+  <p>1 = Strongly disagree; 9 = Strongly agree</p>
 </div>
 
 <br>
@@ -102,6 +103,7 @@
 
 <div align="center">
   <p id ="sentence_extrinsic">{{}}</p> 
+  <p>1 = Strongly disagree; 9 = Strongly agree</p>
 </div>
 
 <div id="checkboxes" align="center">
@@ -185,8 +187,8 @@
     <span class="slider">
       <input type="range" name="rangeInputRightWrong" min="0" max="100" defaultValue = "50" onchange="experiment.record_rightwrong_slider_change()" class="slider" id="range1">
     </span>
-    <span class="left">Definitely no</span>
-    <span class="right">Definitely yes</span>​
+    <span class="left">Wrong</span>
+    <span class="right">Right</span>​
 
     <br>
     <br>
@@ -200,8 +202,8 @@
     <span class="slider">
       <input type="range" name="rangeInputShould" min="0" max="100" onchange="experiment.record_should_slider_change()" class="slider" id="range2">
     </span>
-    <span class="left">Wrong</span>
-    <span class="right">Right</span>​
+    <span class="left">Definitely no</span>
+    <span class="right">Definitely yes</span>​
 
   <table align="center"><tr>
   <td align="center">
@@ -234,7 +236,7 @@
     </div>
 
     <div align="center">
-      <input type="text" id="crt_answer" name="crt_answer" style="width:40%"></input>
+      <input type="text" id="crt_answer" name="crt_answer" style="width:20%"></input>
    </div>
 
     <br>

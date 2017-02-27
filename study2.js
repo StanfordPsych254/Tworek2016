@@ -97,6 +97,7 @@ var sents_inherence = [['We use red in traffic lights to mean "stop" because of 
 ['Pink is the color associated with girls because of something about the color pink or about girls— maybe because pink\'s flower-like appearance matches girls\' dainty nature.', 'Pink is the color associated with girls because of some historical or contextual reason—maybe because businesses promoted pink products for girls over the last century.'],
 
 ['Wedding dresses are white because of something about the color white or about wedding dresses—maybe because the untainted nature of white reminds people of pure love.', 'Wedding dresses are white because of some historical or contextual reason—maybe because someone famous wore a white wedding dress, which started a trend that continues to this day.'],
+
 ['Intelligent organisms on Earth fully pay attention when taking surveys because of something about intelligent organisms or about taking surveys—maybe paying attention allows intelligent organisms to contribute to research productively. For this item can you please choose choice five?', 'Intelligent organisms on Earth fully pay attention when taking surveys because of some historical or contextual reason— maybe because taking surveys became a popular way to make money with the rise of technology over time. For this item can you please choose choice three?']];
 
 //prompts for ought inferences
@@ -135,12 +136,17 @@ var sents_ought = [[['Consider that children typically address their teachers wi
 //12
 [['Consider that couples typically live in a different house than their relatives.', 'Is it wrong or right for couples to live in a different house than their relatives?', 'Should couples live in a different house than their relatives?'], ['Consider that couples don’t typically live in the same house as their relatives.', 'Is it wrong or right for couples to live in the same house as their relatives?', 'Should couples live in the same house as their relatives?']]];
 
+//attention check
+//['For this question, please slide all the range sliders all the way to the left to indicate that you are paying attention', 'Is it wrong or right to slide the range slider all the way to the left?', 'Should one slide the range slider all the way to the left?']
+
+//attention check
 sents_inherence = shuffle(sents_inherence); 
 sents_ought = shuffle(sents_ought);
-sent_crt = shuffle(sents_crt);
+sents_crt = shuffle(sents_crt);
 sents_ought = set_ought_array(sents_ought, 6);
 //need to implement shuffling typical vs atypical
-
+sents_ought[12] = [['For this question, please slide all the range sliders all the way to the left to indicate that you are paying attention', 'Is it wrong or right to slide the range slider all the way to the left?', 'Should one slide the range slider all the way to the left?'], ['For this question, please slide all the range sliders all the way to the left to indicate that you are paying attention', 'Is it wrong or right to slide the range slider all the way to the left?', 'Should one slide the range slider all the way to the left?']];
+sents_ought = shuffle(sents_ought);
 
 var totalTrials = sents_inherence.length + sents_ought.length + sents_crt.length;
 
@@ -158,8 +164,9 @@ var slider_should_moved = false;
 var experiment = {
     // The object to be submitted.
     data: {
-      prompts: [],
-      sent_ought: [],
+      prompts_ought: [],
+      prompts_inherence: [],
+      prompts_crt: [],
       intrinsic: [],
       extrinsic: [],
       should: [],
@@ -169,13 +176,13 @@ var experiment = {
       crt: []
     },
     
-    // end the experiment
-    end: function() {
-      showSlide("finished");
-      setTimeout(function() {
-        turk.submit(experiment.data)
-      }, 1500);
+    start:function() {
+        experiment.data.prompts_ought.push(sents_ought);
+        experiment.data.prompts_inherence.push(sents_inherence);
+        experiment.data.prompts_crt.push(sents_crt);
+        experiment.next();
     },
+
 
     hide_test_messages: function() {
         $("#testMessage").html('');   // clear the test message
@@ -199,6 +206,7 @@ var experiment = {
           $("#testCRTMessage").html('<font color="red">' + 'Please make a response!' + '</font>');
         }
         else {
+          experiment.data.crt.push(answer_text);
           crt_answer.value = "";
           experiment.next();
         }
@@ -386,9 +394,6 @@ var experiment = {
     end: function() {
       showSlide("finished");
       
-      var file = '/data.json';
-      jsonfile.writeFile(file, experiment.data, function (err) {
-        console.error(err);
-      })
+      JSON.stringify(experiment.data);
     }
 }

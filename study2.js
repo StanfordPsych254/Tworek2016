@@ -151,7 +151,8 @@ sents_ought = shuffle(sents_ought);
 var totalTrials = sents_inherence.length + sents_ought.length + sents_crt.length;
 
 //randomizes the order of the parts
-var parts = ['crt', 'ought', 'inherence'];
+//var parts = ['crt', 'ought', 'inherence'];
+var parts = ['crt'];
 parts = shuffle(parts);
 
 // Show the instructions slide -- this is what we want subjects to see first.
@@ -393,7 +394,7 @@ var experiment = {
 
     end: function() {
       showSlide("finished");
-      
-      JSON.stringify(experiment.data);
+      turk.submit(experiment.data);
+      //JSON.stringify(experiment.data);
     }
 }

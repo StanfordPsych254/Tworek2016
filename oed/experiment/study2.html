@@ -1,0 +1,306 @@
+<!-- ## Code -->
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Psychology Survey</title>
+<script src="jquery-1.11.2.min.js"></script>
+<script src="js/foundation/foundation.slider.js"></script>
+<script src="mmturkey-0.6.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="style.css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<!-- The instructions slide. -->
+<div class="slide" id="instructions">
+  <br>
+  <img src="images/stanford.png" alt="Stanford University">
+  <br>
+  <br>
+  <p class="block-text">In this experiment, you will read statements and answer questions about different human behaviors. </p>
+
+  <button type="button" onclick="this.blur(); experiment.start()">Start</button> 
+
+  <p class="block-text" id="legal">By answering the following questions, you are participating in a study being performed by cognitive scientists in the Stanford Department of Psychology. If you have questions about this research, please contact us at <a href="mailto://stanfordpsych254@gmail.com.">stanfordpsych254@gmail.com</a>. You must be  at least 18 years old to participate. Your participation in this research is voluntary. You may decline to answer any or all of the  following questions. You may decline further participation, at any time,  without adverse consequences. Your anonymity is assured; the researchers  who have requested your participation will not receive any personal information  about you. Note however that we have recently been made aware that your public Amazon.com profile can be accessed via your worker ID if you do not choose  to opt out. If you would like to opt out of this feature, you may follow instructions available  <a href="https://www.amazon.com/gp/help/customer/display.html?nodeId=16465241">here</a>.</p>
+</div>
+
+<!-- The slide for the inherence section. -->
+<div class="slide" id="inherence">
+  
+<!--Progress bar -->
+<div class="progress">
+    <div id="progress_inherence" class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:0%"></div>
+  </div>
+  <br>
+  
+  <!-- Prompts and radio buttons -->
+<div align="center">
+  <h5><b>How much do you agree with the following statements?</b></h5><br>
+  <!--<h5><b>1 = Strongly disagree; 9 = Strongly agree</b></h5><br>-->
+</div>
+<div align="center">
+  <p id ="sentence_intrinsic">{{}}</p> 
+  <p>1 = Strongly disagree; 9 = Strongly agree</p>
+</div>
+
+<br>
+
+<div id="checkboxes" align="center">
+  <div class="checkboxgroup">
+    <input type="radio" name="judgment_i" id="rb1" />
+    <label for="rb1">1</label>
+  </div>
+  <div class="checkboxgroup">
+    <input type="radio" name="judgment_i" id="rb2" />
+    <label for="rb2">2</label>
+  </div>
+  <div class="checkboxgroup">
+    <input type="radio" name="judgment_i" id="rb3" />
+    <label for="rb3">3</label>
+  </div>
+  <div class="checkboxgroup">
+    <input type="radio" name="judgment_i" id="rb4" />
+    <label for="rb4">4</label>
+  </div>
+  <div class="checkboxgroup">
+    <input type="radio" name="judgment_i" id="rb5" />
+    <label for="rb5">5</label>
+  </div>
+  <div class="checkboxgroup">
+    <input type="radio" name="judgment_i" id="rb6" />
+    <label for="rb6">6</label>
+  </div>
+  <div class="checkboxgroup">
+    <input type="radio" name="judgment_i" id="rb7" />
+    <label for="rb7">7</label>
+  </div>
+  <div class="checkboxgroup">
+    <input type="radio" name="judgment_i" id="rb8" />
+    <label for="rb8">8</label>
+  </div>
+  <div class="checkboxgroup">
+    <input type="radio" name="judgment_i" id="rb9" />
+    <label for="rb9">9</label>
+  </div>
+</div>
+
+<br>
+
+<div align="center">
+  <p id ="sentence_extrinsic">{{}}</p> 
+  <p>1 = Strongly disagree; 9 = Strongly agree</p>
+</div>
+
+<div id="checkboxes" align="center">
+  <div class="checkboxgroup">
+    <input type="radio" name="judgment_e" id="rb1" />
+    <label for="rb1">1</label>
+  </div>
+  <div class="checkboxgroup">
+    <input type="radio" name="judgment_e" id="rb2" />
+    <label for="rb2">2</label>
+  </div>
+  <div class="checkboxgroup">
+    <input type="radio" name="judgment_e" id="rb3" />
+    <label for="rb3">3</label>
+  </div>
+  <div class="checkboxgroup">
+    <input type="radio" name="judgment_e" id="rb4" />
+    <label for="rb4">4</label>
+  </div>
+  <div class="checkboxgroup">
+    <input type="radio" name="judgment_e" id="rb5" />
+    <label for="rb5">5</label>
+  </div>
+  <div class="checkboxgroup">
+    <input type="radio" name="judgment_e" id="rb6" />
+    <label for="rb6">6</label>
+  </div>
+  <div class="checkboxgroup">
+    <input type="radio" name="judgment_e" id="rb7" />
+    <label for="rb7">7</label>
+  </div>
+  <div class="checkboxgroup">
+    <input type="radio" name="judgment_e" id="rb8" />
+    <label for="rb8">8</label>
+  </div>
+  <div class="checkboxgroup">
+    <input type="radio" name="judgment_e" id="rb9" />
+    <label for="rb9">9</label>
+  </div>
+</div>
+
+<!--Next button-->
+<table align="center"><tr>
+<td align="center">
+<button type="button" id="nextButton" onClick="experiment.log_response_inherence()"> next</button>
+       </td> 
+    <tr><td align="center">
+    <div id="testMessage"> </div>
+    </td></tr>
+</table>
+</div>
+
+<!--Ought inferences slides-->
+ <div class="slide" id="ought">
+
+    <!--progress bar -->
+    <div class="progress">
+        <div id="progress_ought" class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+        </div>
+    </div>
+
+    <br>
+  
+    <div align="center">
+      <h5><b>Read the prompt and answer the following questions.</b></h5><br>
+    </div>
+
+    <div align="center">
+      <p id ="description">{{}}</p> 
+    </div>
+
+    <br>
+    <br>
+
+    <div align="center">
+      <p id ="question1">{{}}</p> 
+    </div>
+
+    <span class="left">0</span> 
+    <span class="right">100</span>​
+    <span class="slider">
+      <input type="range" name="rangeInputRightWrong" min="0" max="100" defaultValue = "50" onchange="experiment.record_rightwrong_slider_change()" class="slider" id="range1">
+    </span>
+    <span class="left">Wrong</span>
+    <span class="right">Right</span>​
+
+    <br>
+    <br>
+
+    <div align="center">
+      <p id ="question2">{{}}</p> 
+    </div>
+
+    <span class="left">0</span> 
+    <span class="right">100</span>​
+    <span class="slider">
+      <input type="range" name="rangeInputShould" min="0" max="100" onchange="experiment.record_should_slider_change()" class="slider" id="range2">
+    </span>
+    <span class="left">Definitely no</span>
+    <span class="right">Definitely yes</span>​
+
+  <table align="center"><tr>
+  <td align="center">
+  <button type="button" id="nextButton" onClick="experiment.log_response_ought()"> next</button>
+         </td> 
+      <tr><td align="center">
+      <div id="testSliderMessage"> </div>
+      </td></tr>
+
+ </table>
+ </div>
+
+ <!--CRT slide-->
+ <div class="slide" id="crt">
+
+    <!--progress bar -->
+    <div class="progress">
+        <div id="progress_crt" class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+        </div>
+    </div>
+
+    <br>
+  
+    <div align="center">
+      <h5><b>Read the question and record your answer in the text box.</b></h5><br>
+    </div>
+
+    <div align="center">
+      <p id ="crt_question">{{}}</p> 
+    </div>
+
+    <div align="center">
+      <input type="text" id="crt_answer" name="crt_answer" style="width:20%"></input>
+   </div>
+
+    <br>
+    <br>
+
+  <table align="center"><tr>
+  <td align="center">
+  <button type="button" id="nextButton" onClick="experiment.log_response_crt()"> next</button>
+         </td> 
+      <tr><td align="center">
+      <div id="testCRTMessage"> </div>
+      </td></tr>
+
+ </table>
+ </div>
+
+ <!-- The demographic info slide. -->
+ <div class="slide" id="demographic">
+
+  <p> What is your highest level of education? </p>
+   <form onsubmit="experiment.submitcomments()">
+   <table align = "center">
+    <tr>
+      <th><input type="radio" name="education" value = "1">Less than high school</th>
+    </tr>
+    <tr>
+      <th><input type="radio" name="education" value = "2">High school/GED</th>
+    </tr>
+    <tr>
+      <th><input type="radio" name="education" value = "3">Some college</th>
+    </tr>
+    <tr>
+      <th><input type="radio" name="education" value = "4">Bachelor's (B.A., B.S.)</th>
+    </tr>
+    <tr>
+      <th><input type="radio" name="education" value = "5">Master's (M.A., M.S.)</th>
+      </tr>
+    <tr>
+      <th><input type="radio" name="education" value = "6">Doctoral (Ph.D, J.D., M.D.)<th>
+      </tr>
+</table>
+
+   <p> How would you describe your political attitudes?</p>
+   <p>1 = strongly liberal; 5 = Moderate; 9 = strongly conservative</p>
+      <table align = "center"><tr>
+        <td align="center">
+        <tr>
+          <td> </td>
+          <td><input type="radio" name="political" value = "1">1</td>
+          <td><input type="radio" name="political" value = "2">2</td>
+          <td><input type="radio" name="political" value = "3">3</td>
+          <td><input type="radio" name="political" value = "4">4</td>
+          <td><input type="radio" name="political" value = "5">5</td>
+          <td><input type="radio" name="political" value = "6">6</td>
+          <td><input type="radio" name="political" value = "7">7</td>
+          <td><input type="radio" name="political" value = "8">8</td>
+          <td><input type="radio" name="political" value = "9">9</td>
+        </tr>
+      </table>
+
+    <!--Next button-->
+    <table align="center"><tr>
+    <td align="center">
+    <button type="button" id="endButton" onClick="experiment.log_response_demographic()">next</button>
+           </td> 
+        <tr><td align="center">
+        <div id="testDemographicMessage"> </div>
+        </td></tr>
+    </table>
+</div>
+  
+<!-- The finish slide. -->
+<div class="slide" id="finished">
+  You're finished - thanks for participating! Submitting to Mechanical Turk...
+</div>
+
+<script src="study2.js"></script>
+
+</body>
+</html>

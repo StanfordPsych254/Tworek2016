@@ -151,8 +151,8 @@ sents_ought = shuffle(sents_ought);
 var totalTrials = sents_inherence.length + sents_ought.length + sents_crt.length;
 
 //randomizes the order of the parts
-//var parts = ['crt', 'ought', 'inherence'];
-var parts = ['crt'];
+var parts = ['crt', 'ought', 'inherence'];
+//var parts = ['crt'];
 parts = shuffle(parts);
 
 // Show the instructions slide -- this is what we want subjects to see first.
@@ -359,8 +359,8 @@ var experiment = {
         slider_rightwrong_moved = false;
         slider_should_moved = false;
 
-        document.getElementsByName("rangeInputShould").value = 50;
-        document.getElementsByName("rangeInputRightWrong").value = 50;
+        document.getElementsByName("rangeInputShould").value = 0;
+        document.getElementsByName("rangeInputRightWrong").value = 0;
 
         var prompts = sents_ought.shift();
         if (typeof prompts == "undefined"){
@@ -394,7 +394,7 @@ var experiment = {
 
     end: function() {
       showSlide("finished");
-      turk.submit(experiment.data);
+      setTimeout(function() { turk.submit(experiment.data) }, 1500);
       //JSON.stringify(experiment.data);
     }
 }

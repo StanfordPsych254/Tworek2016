@@ -1,0 +1,297 @@
+---
+title: "Replication of 'Why Do People Tend to Infer “Ought” From “Is”? The Role of Biases in Explanation' by Tworek & Cimpian (2016, Psychological Science)"
+author: "Sara Altman skaltman@stanford.edu"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+---
+
+<!-- Replication reports should all use this template to standardize reporting across projects.  These reports will be public supplementary materials that accompany the summary report(s) of the aggregate results. -->
+
+##Introduction
+
+Study 2 of Tworek and Cimpian (2016) investigated if inherence bias is positively related to subjects' ought inferences when reasoning about typical behaviors. Inherence bias is defined as a preference for explanations that appeal to intrinsic qualities (i.e., color) over explanations that appeal to extrinsic qualities (i.e., historical context). To measure inherence bias, subjects read fifteen extrinsic explanations and fifteen intrinsic explanations and recorded their endorsement of each. Ought inferences were measured by showing subjects twelve statements about different behaviors. Six of these behaviors were considered typical, and six were atypical. Subjects then answered two questions about these behaviors, one of which asked them how "right" or "wrong" the behavior was, and one of which asked them if people should perform the behavior. Subjects' education level, conservatism, and answers to a short Cognitive Reflection Test were also recorded as control measures. 
+
+##Methods
+
+A sample of 109 participants will be recruited from Amazon Mechanical Turk. Subjects will be asked to record their endorsements of 15 pairs of explanations of different phenomena, to answer 12 pairs of questions about twelve different human behaviors, and to answer three short CRT questions. They will be asked about their education level and political leaning at the end of the survey. 
+
+To view the experiment, click here: http://web.stanford.edu/~skaltman/study2.html. 
+
+###Power Analysis
+
+Original effect size, power analysis for samples to achieve 80%, 90%, 95% power to detect that effect size.  Considerations of feasibility for selecting planned sample size.
+
+###Planned Sample
+
+
+
+###Materials
+
+All materials are here: https://osf.io/4kanr/.
+
+###Procedure	
+
+The procedure from the original paper was followed. The text from the original paper is as follows:
+
+"Procedure. Participants were tested online via Mechan- ical Turk using Qualtrics software. The ought measure, the measure of inherence bias, and the CRT were pre- sented in random order. Item order was randomized for all scales. The measures of participants’ education and conservatism were administered with other demographic questions at the end of the survey."
+
+###Analysis Plan
+
+The analysis plan from the original paper was followed. The following is quoted from the original paper:
+
+"Analytic strategy. Because we manipulated behavior typicality within subjects, we used a multilevel model to analyze our data. The model included cross-classified random effects (specifically, intercepts) for subjects and items. Participants’ ought inferences, calculated as the average of their responses to the two ought questions on each trial, served as the dependent variable. The model included as independent variables the typicality of each stimulus behavior (0 = atypical, 1 = typical), participants’ scores on the measure of inherence bias, and the three control measures (i.e., CRT, education, and conserva- tism). The model also included the two-way interactions between behavior typicality and each of the latter four variables. We hypothesized a positive relationship between participants’ inherence bias and their ought inferences for typical—but not atypical—behaviors. Thus, our main prediction was of a significant two-way interaction between the measure of inherence bias and behavior typicality. Including the other two-way interac- tions (with CRT, education, and conservatism) in the model enabled us to explore whether the relationships between these control variables and ought inferences also differed for typical and atypical behaviors. Adjusting for these potential relationships was a conservative anal- ysis strategy; in alternative models that did not include these interactions, the predicted relationship was esti- mated to be larger in magnitude.
+For ease of interpretation, we present unstandardized coefficients below. Given the coding of the behavior- typicality variable, the first-order coefficients for the measure of inherence bias, CRT, education, and conser- vatism in this model are simply the slopes of the rela- tionships between these variables and ought inferences for atypical behaviors. Moreover, the slopes for typical behaviors can easily be calculated by adding each first- order coefficient to the coefficient for the corresponding two-way interaction.Can also quote directly, though it is less often spelled out effectively for an analysis strategy section.  The key is to report an analysis strategy that is as close to the original - data cleaning rules, data exclusion rules, covariates, etc. - as possible."
+
+The key analysis was a linear mixed-effects model. 
+
+###Differences from Original Study
+
+
+### Methods Addendum (Post Data Collection)
+
+You can comment this section out prior to final report with data collection.
+
+#### Actual Sample
+  Sample size, demographics, data exclusions based on rules spelled out in analysis plan
+
+#### Differences from pre-data collection methods plan
+  Any differences from what was described as the original plan, or “none”.
+
+
+##Results
+
+
+### Data preparation
+
+Data preparation following the analysis plan.
+```{r, message = FALSE}
+library(tidyverse)
+library(jsonlite)
+library(stringr)
+library(lme4)
+
+#params
+attention_check_inherence <- "Intelligent organisms on Earth fully pay attention when taking surveys because of something about intelligent organisms or about taking surveys—maybe paying attention allows intelligent organisms to contribute to research productively. For this item can you please choose choice five?"
+attention_check_ought <- "For this question, please slide all the range sliders all the way to the left to indicate that you are paying attention"
+
+typicals <- c("Consider that children typically address their teachers with “Ms.,” “Mrs.,” or “Mr.”",
+"Think about how people often celebrate their birthdays with other people.",
+"Think about how people often go watch a movie when they go on dates.",
+"Think about how people typically give roses as gifts on Valentine\'s Day.",
+"Think about how doctors usually wear white coats.",
+"Think about how men and women typically have separate public bathrooms.",
+"Think about how a lot of professionals wear dark-colored clothing.",
+"Consider that people typically stand when the national anthem is played.",
+"Consider that people often pay money to watch others play sports.",
+"Consider that people generally shake hands when they first meet.",
+"Consider that most men wear their hair short.",
+"Consider that couples typically live in a different house than their relatives.")
+```
+	
+####Import data
+```{r}
+#gets all json files in the folder
+#folder will need to be changed once the experiment is no longer in the sandbox
+json_files <- list.files("~/GitHub/Psych254/Tworek2016/sandbox-results/")
+root_data_path <- "~/GitHub/Psych254/Tworek2016/sandbox-results/"
+```
+
+#### Data exclusion/filtering
+```{r}
+data <- tibble()
+
+#Function that extracts data from the JSON and converts to a data frame
+get_data_from_json <- function(data_path) {
+  d <- jsonlite::fromJSON(txt = data_path)
+  
+  ought_data <-
+    tibble(
+      id = d$WorkerId,
+      prompt = c(d$answers$data$prompts_ought1, d$answers$data$prompts_ought2, d$answers$data$prompts_ought3,
+                          d$answers$data$prompts_ought4, d$answers$data$prompts_ought5, 
+                          d$answers$data$prompts_ought6, 
+                          d$answers$data$prompts_ought7, d$answers$data$prompts_ought8, 
+                          d$answers$data$prompts_ought9, 
+                          d$answers$data$prompts_ought10, d$answers$data$prompts_ought11, 
+                          d$answers$data$prompts_ought12, 
+                          d$answers$data$prompts_ought13), 
+      prompt_type = "ought",
+      should = as.integer(d$answers$data$should),
+      rightwrong = as.integer(d$answers$data$rightwrong),
+      education = as.integer(d$answers$data$education), #fix so isn't redundant
+      political = as.integer(d$answers$data$political)
+      ) %>% 
+    group_by(prompt) %>% 
+    mutate(average = mean(c(should, rightwrong), na.rm = TRUE)) %>% 
+    ungroup() %>% 
+    gather(key = measure, value = value, should, rightwrong, average) 
+  
+  inherence_data <-
+    tibble(
+      id = d$WorkerId,
+      prompt = c(d$answers$data$prompts_inherence1, d$answers$data$prompts_inherence2, 
+                              d$answers$data$prompts_inherence3, d$answers$data$prompts_inherence4, 
+                              d$answers$data$prompts_inherence5, d$answers$data$prompts_inherence6, 
+                              d$answers$data$prompts_inherence7, d$answers$data$prompts_inherence8, 
+                              d$answers$data$prompts_inherence9, d$answers$data$prompts_inherence10, 
+                              d$answers$data$prompts_inherence11, d$answers$data$prompts_inherence12, 
+                              d$answers$data$prompts_inherence13, d$answers$data$prompts_inherence14,
+                              d$answers$data$prompts_inherence15, d$answers$data$prompts_inherence16),
+      prompt_type = "inherence",
+      intrinsic = as.integer(d$answers$data$intrinsic),
+      extrinsic = as.integer(d$answers$data$extrinsic),
+      education = as.integer(d$answers$data$education),
+      political = as.integer(d$answers$data$political)
+    ) %>% 
+    gather(key = measure, value = value, intrinsic, extrinsic)
+  
+  crt_data <-
+    tibble(
+      id = d$WorkerId,
+      prompt = c(d$answers$data$prompts_crt1,d$answers$data$prompts_crt2, 
+                       d$answers$data$prompts_crt3),
+      prompt_type = "crt",
+      crt = d$answers$data$crt,
+      education = as.integer(d$answers$data$education),
+      political = as.integer(d$answers$data$political)
+    ) %>% 
+    gather(key = measure, value = value, crt) %>% 
+    mutate(value = as.double(str_extract(value, "\\d+")))
+
+  
+  return(bind_rows(crt_data, inherence_data, ought_data))
+}
+
+#run funciton for all json files
+for (i in 1:length(json_files)) {
+  data_path <- str_c(root_data_path, json_files[i])
+  data_participant <- get_data_from_json(data_path)
+  data <- bind_rows(data, data_participant)
+}
+```
+
+Data exclusion for attention check failures:
+```{r, eval=FALSE}
+#attention check for inherence section
+to_exclude_inherence_extrinsic <-
+  data %>% 
+  filter(prompt == attention_check_inherence,
+         measure == "extrinsic",
+         value != 3) %>% 
+  .$id
+
+to_exclude_inherence_intrinsic <-
+  data %>% 
+  filter(prompt == attention_check_inherence,
+         measure == "intrinsic",
+         value != 5) %>% 
+  .$id
+
+to_exclude_ought_should <-
+  data %>% 
+  filter(prompt == attention_check_ought,
+         measure == "should",
+         value != 0) %>% 
+  .$id
+
+to_exclude_ought_rightwrong <-
+  data %>% 
+  filter(prompt == attention_check_ought,
+         measure == "rightwrong",
+         value != 0) %>% 
+  distinct(id)
+
+to_exclude <- c(to_exclude_inherence_extrinsic, 
+                to_exclude_inherence_intrinsic, 
+                to_exclude_ought_should, 
+                to_exclude_ought_rightwrong)
+
+data <-
+  data %>% 
+  filter(!(id %in% to_exclude))
+```
+
+#### Prepare data for analysis - create columns etc.
+Get the inherence score for each participant:
+```{r}
+inherence_scores <-
+  data %>% 
+  group_by(id) %>% 
+  filter(prompt_type == "inherence") %>% 
+  spread(measure, value) %>% 
+  summarise(inherence_measure = sum(intrinsic) - sum(extrinsic))
+```
+
+Get the inherence score for each participant:
+```{r}
+inherence_scores <-
+  data %>% 
+  group_by(id) %>% 
+  filter(prompt_type == "inherence") %>% 
+  spread(measure, value) %>% 
+  summarise(inherence_measure = sum(intrinsic) - sum(extrinsic))
+```
+
+Get the CRT score for each participant:
+```{r}
+#fix: there's an easier way to do this 
+grade_nurse_crt <-
+  data %>% 
+  filter(prompt_type == "crt",
+         str_detect(prompt, "nurses")) %>% 
+  mutate(nurse_score = ifelse(near(value, 2.00), 1, 0))
+
+grade_salad_crt <-
+  data %>% 
+  filter(prompt_type == "crt",
+         str_detect(prompt, "salad")) %>% 
+  mutate(salad_score = ifelse(near(value, 2.25), 1, 0))
+
+grade_sally_crt <-
+  data %>% 
+  filter(prompt_type == "crt",
+         str_detect(prompt, "Sally")) %>% 
+  mutate(sally_score = ifelse(near(value, 5.00), 1, 0))
+
+crt_scores <-
+  grade_nurse_crt %>% 
+  left_join(grade_salad_crt, by = "id") %>% 
+  left_join(grade_sally_crt, by = "id") %>% 
+  group_by(id) %>% 
+  summarise(crt_score = sum(sally_score, nurse_score, salad_score)/3) 
+```
+
+Remove attention checks, select out prompt, add in inherence scores and crt scores and typicality. 
+```{r}
+data_final <-
+  data %>%
+  filter(prompt != attention_check_inherence,
+         prompt != attention_check_ought) %>%
+  group_by(id) %>% 
+  left_join(inherence_scores, by = "id") %>% 
+  left_join(crt_scores, by = "id") %>% 
+  filter(measure == "average") %>% 
+  mutate(typicality = ifelse(prompt %in% typicals, 1, 0))
+```
+
+### Confirmatory analysis
+
+
+###Exploratory analyses
+
+Any follow-up analyses desired (not required).  
+
+## Discussion
+
+### Summary of Replication Attempt
+
+Open the discussion section with a paragraph summarizing the primary result from the confirmatory analysis and the assessment of whether it replicated, partially replicated, or failed to replicate the original result.  
+
+### Commentary
+
+Add open-ended commentary (if any) reflecting (a) insights from follow-up exploratory analysis, (b) assessment of the meaning of the replication (or not) - e.g., for a failure to replicate, are the differences between original and present study ones that definitely, plausibly, or are unlikely to have been moderators of the result, and (c) discussion of any objections or challenges raised by the current and original authors about the replication attempt.  None of these need to be long.

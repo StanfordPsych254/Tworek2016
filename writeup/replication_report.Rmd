@@ -281,6 +281,11 @@ data_final <-
 
 ### Confirmatory analysis
 
+```{r}
+summary(data_final)
+```
+
+
 
 ###Exploratory analyses
 

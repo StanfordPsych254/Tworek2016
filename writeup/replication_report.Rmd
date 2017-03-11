@@ -24,10 +24,11 @@ To view the experiment, click here: http://web.stanford.edu/~skaltman/study2.htm
 
 ###Power Analysis
 
-Original effect size, power analysis for samples to achieve 80%, 90%, 95% power to detect that effect size.  Considerations of feasibility for selecting planned sample size.
+The original study (n = 112) found that the interaction between the measure of inherence bias and behavior typicality was a significant predictor of the measure of ought inferences ($b$ = 2.44, 95% CI = [.78, 4.10]). The original study used a linear mixed-effects model. I estimated the effect size by calculating Cohens $d_z$ for the difference between the predictor and 0 ($d_z = 0.27$). The original power to detect this effect was .81. To achieve 80% power, a sample size of 110 is needed. To achieve 90% power, a sample size of 147 is needed. To achieve 95% power, a sample size of 181 is needed. 
 
 ###Planned Sample
 
+The planned sample size is 130. 
 
 
 ###Materials
@@ -74,11 +75,11 @@ library(tidyverse)
 library(jsonlite)
 library(stringr)
 library(lme4)
+library(modelr)
 
 #params
 attention_check_inherence <- "Intelligent organisms on Earth fully pay attention when taking surveys because of something about intelligent organisms or about taking surveys—maybe paying attention allows intelligent organisms to contribute to research productively. For this item can you please choose choice five?"
 attention_check_ought <- "For this question, please slide all the range sliders all the way to the left to indicate that you are paying attention"
-
 typicals <- c("Consider that children typically address their teachers with “Ms.,” “Mrs.,” or “Mr.”",
 "Think about how people often celebrate their birthdays with other people.",
 "Think about how people often go watch a movie when they go on dates.",
@@ -105,7 +106,7 @@ root_data_path <- "~/GitHub/Psych254/Tworek2016/sandbox-results/"
 ```{r}
 data <- tibble()
 
-#Function that extracts data from the JSON and converts to a data frame
+#Function extracts data from a JSON object and converts to a data frame
 get_data_from_json <- function(data_path) {
   d <- jsonlite::fromJSON(txt = data_path)
   
@@ -167,7 +168,7 @@ get_data_from_json <- function(data_path) {
   return(bind_rows(crt_data, inherence_data, ought_data))
 }
 
-#run funciton for all json files
+#run funciton for all json files and bind them into a single data frame
 for (i in 1:length(json_files)) {
   data_path <- str_c(root_data_path, json_files[i])
   data_participant <- get_data_from_json(data_path)
@@ -217,7 +218,7 @@ data <-
 ```
 
 #### Prepare data for analysis - create columns etc.
-Get the inherence score for each participant:
+The following creates a tibble of the inherence scores for each participant:
 ```{r}
 inherence_scores <-
   data %>% 
@@ -227,17 +228,7 @@ inherence_scores <-
   summarise(inherence_measure = sum(intrinsic) - sum(extrinsic))
 ```
 
-Get the inherence score for each participant:
-```{r}
-inherence_scores <-
-  data %>% 
-  group_by(id) %>% 
-  filter(prompt_type == "inherence") %>% 
-  spread(measure, value) %>% 
-  summarise(inherence_measure = sum(intrinsic) - sum(extrinsic))
-```
-
-Get the CRT score for each participant:
+The following creates a tibble of the CRT for each participant:
 ```{r}
 #fix: there's an easier way to do this 
 grade_nurse_crt <-
@@ -266,25 +257,38 @@ crt_scores <-
   summarise(crt_score = sum(sally_score, nurse_score, salad_score)/3) 
 ```
 
-Remove attention checks, select out prompt, add in inherence scores and crt scores and typicality. 
+The following removes the attention checks prompts so that they are not included in the analysis. add in inherence scores and crt scores and typicality. 
 ```{r}
-data_final <-
+data_filtered <-
   data %>%
   filter(prompt != attention_check_inherence,
-         prompt != attention_check_ought) %>%
+         prompt != attention_check_ought) 
+```
+
+Join the data with the inherence scores and crt scores:
+```{r}
+data_scores <-
+  data_filtered %>%
   group_by(id) %>% 
   left_join(inherence_scores, by = "id") %>% 
   left_join(crt_scores, by = "id") %>% 
-  filter(measure == "average") %>% 
-  mutate(typicality = ifelse(prompt %in% typicals, 1, 0))
+  filter(measure == "average") 
+```
+
+Add in binary typicality measure for each prompt:
+```{r}
+data_final <-
+  data_scores %>% 
+  mutate(typicality = as.integer(ifelse(prompt %in% typicals, 1, 0)))
 ```
 
 ### Confirmatory analysis
 
+As detailed in the original paper, we fit a linear mixed-effects model with subjects and items as random intercept effects. 
 ```{r}
-summary(data_final)
+#Currently p > n so we can't fit the full model-when more data is collected it will fit the full model
+fit <- lmer(value ~ inherence_measure*typicality + crt_score*typicality + education*typicality + political*typicality + (1 | id) + (1 | prompt), data = data_final)
 ```
-
 
 
 ###Exploratory analyses

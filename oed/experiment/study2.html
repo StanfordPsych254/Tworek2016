@@ -49,39 +49,39 @@
 
 <div id="checkboxes" align="center">
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_i" id="rb1" />
+    <input type="radio" name="judgment_i" value = "1" id="rb1" />
     <label for="rb1">1</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_i" id="rb2" />
+    <input type="radio" name="judgment_i" value = "2" id="rb2" />
     <label for="rb2">2</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_i" id="rb3" />
+    <input type="radio" name="judgment_i" value = "3" id="rb3" />
     <label for="rb3">3</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_i" id="rb4" />
+    <input type="radio" name="judgment_i" value = "4" id="rb4" />
     <label for="rb4">4</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_i" id="rb5" />
+    <input type="radio" name="judgment_i" value = "5" id="rb5" />
     <label for="rb5">5</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_i" id="rb6" />
+    <input type="radio" name="judgment_i" value = "6" id="rb6" />
     <label for="rb6">6</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_i" id="rb7" />
+    <input type="radio" name="judgment_i" value = "7" id="rb7" />
     <label for="rb7">7</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_i" id="rb8" />
+    <input type="radio" name="judgment_i" value = "8" id="rb8" />
     <label for="rb8">8</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_i" id="rb9" />
+    <input type="radio" name="judgment_i" value = "9" id="rb9" />
     <label for="rb9">9</label>
   </div>
 </div>
@@ -95,39 +95,39 @@
 
 <div id="checkboxes" align="center">
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_e" id="rb1" />
+    <input type="radio" name="judgment_e" value = "1" id="rb1" />
     <label for="rb1">1</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_e" id="rb2" />
+    <input type="radio" name="judgment_e" value = "2" id="rb2" />
     <label for="rb2">2</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_e" id="rb3" />
+    <input type="radio" name="judgment_e" value = "3" id="rb3" />
     <label for="rb3">3</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_e" id="rb4" />
+    <input type="radio" name="judgment_e" value = "4" id="rb4" />
     <label for="rb4">4</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_e" id="rb5" />
+    <input type="radio" name="judgment_e" value = "5" id="rb5" />
     <label for="rb5">5</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_e" id="rb6" />
+    <input type="radio" name="judgment_e" value = "6" id="rb6" />
     <label for="rb6">6</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_e" id="rb7" />
+    <input type="radio" name="judgment_e" value = "7" id="rb7" />
     <label for="rb7">7</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_e" id="rb8" />
+    <input type="radio" name="judgment_e" value = "8" id="rb8" />
     <label for="rb8">8</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_e" id="rb9" />
+    <input type="radio" name="judgment_e" value = "9" id="rb9" />
     <label for="rb9">9</label>
   </div>
 </div>
@@ -287,13 +287,73 @@
     <!--Next button-->
     <table align="center"><tr>
     <td align="center">
-    <button type="button" id="endButton" onClick="experiment.log_response_demographic()">next</button>
+    <button type="button" id="demographicsButton" onClick="experiment.log_response_demographic()">next</button>
            </td> 
         <tr><td align="center">
         <div id="testDemographicMessage"> </div>
         </td></tr>
     </table>
 </div>
+
+ <!-- The debriefing slide. -->
+ <div class="slide" id="debriefing">
+   <div class="question">
+     <p><b>What is your age?</b>
+      </p>
+      <select name="age" id="age" form="demographics" required>
+        <option value="">Choose an age</option>
+        <option value="0-19">&nbsp;0-19</option>
+        <option value="20-29">20-29</option>
+        <option value="30-39">30-39</option>
+        <option value="40-49">40-49</option>
+        <option value="50-59">50-59</option>
+        <option value="60-69">60-69</option>
+        <option value="70-79">70-79</option>
+        <option value="80-89">80-89</option>
+        <option value="&gt;90">90+</option>
+      </select>
+    </div>
+
+   <div class="question">
+     <p>
+       <b>What is your gender?</b>
+      </p>
+      <select name="gender" id="gender" form="demographics" required>
+        <option value="">Choose a gender</option>
+        <option value="female">Female</option>
+        <option value="male">Male</option>
+        <option value="other">Other</option>
+        <option value="no_answer">Prefer not to answer</option>
+      </select>
+   </div>
+
+    <div class="question">
+     <p>
+       <b>What is your ethnicity?</b>
+      </p>
+      <select name="ethnicity" id="ethnicity" form="demographics" required>
+        <option value="">Choose an ethnicity</option>
+        <option value="white">White</option>
+        <option value="hispanic">Hispanic or Latino</option>
+        <option value="3">Black or African American</option>
+        <option value="4">Asian or Pacific Islander</option>
+        <option value="5">Native American</option>
+        <option value="other">Other</option>
+        <option value="no_answer">Prefer not to answer</option>
+      </select>
+    </div>
+
+<!--    <div class="question">
+     <p><b>Did you run into any issues?</b></p>
+     <textarea type="textarea" id="expcomments" style="width:100%" name="comments"></textarea>
+   </div> -->
+  
+  <div align="center">
+    <button type="button" id="debriefingButton" onClick="experiment.log_response_debriefing()">Submit</button>
+  </div>
+  <div id="testDebriefingMessage"> </div>
+</div>
+
   
 <!-- The finish slide. -->
 <div class="slide" id="finished">

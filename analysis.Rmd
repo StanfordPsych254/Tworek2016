@@ -1,0 +1,224 @@
+---
+title: "Tworek2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(jsonlite)
+library(stringr)
+library(lme4)
+
+#params
+attention_check_inherence <- "Intelligent organisms on Earth fully pay attention when taking surveys because of something about intelligent organisms or about taking surveys—maybe paying attention allows intelligent organisms to contribute to research productively. For this item can you please choose choice five?"
+attention_check_ought <- "For this question, please slide all the range sliders all the way to the left to indicate that you are paying attention"
+
+typicals <- c("Consider that children typically address their teachers with “Ms.,” “Mrs.,” or “Mr.”",
+"Think about how people often celebrate their birthdays with other people.",
+"Think about how people often go watch a movie when they go on dates.",
+"Think about how people typically give roses as gifts on Valentine\'s Day.",
+"Think about how doctors usually wear white coats.",
+"Think about how men and women typically have separate public bathrooms.",
+"Think about how a lot of professionals wear dark-colored clothing.",
+"Consider that people typically stand when the national anthem is played.",
+"Consider that people often pay money to watch others play sports.",
+"Consider that people generally shake hands when they first meet.",
+"Consider that most men wear their hair short.",
+"Consider that couples typically live in a different house than their relatives.")
+```
+
+This chunk loads and tidies the data. 
+```{r}
+#gets all json files in the folder
+#folder will need to be changed once the experiment is no longer in the sandbox
+json_files <- list.files("~/GitHub/Psych254/Tworek2016/sandbox-results/")
+root_data_path <- "~/GitHub/Psych254/Tworek2016/sandbox-results/"
+data <- tibble()
+
+get_data_from_json <- function(data_path) {
+  d <- jsonlite::fromJSON(txt = data_path)
+  
+  ought_data <-
+    tibble(
+      id = d$WorkerId,
+      prompt = c(d$answers$data$prompts_ought1, 
+                 d$answers$data$prompts_ought2, 
+                 d$answers$data$prompts_ought3,
+                 d$answers$data$prompts_ought4, 
+                 d$answers$data$prompts_ought5, 
+                 d$answers$data$prompts_ought6, 
+                 d$answers$data$prompts_ought7, 
+                 d$answers$data$prompts_ought8, 
+                 d$answers$data$prompts_ought9, 
+                 d$answers$data$prompts_ought10, 
+                 d$answers$data$prompts_ought11, 
+                 d$answers$data$prompts_ought12, 
+                 d$answers$data$prompts_ought13), 
+      prompt_type = "ought",
+      should = as.integer(d$answers$data$should),
+      rightwrong = as.integer(d$answers$data$rightwrong),
+      education = as.integer(d$answers$data$education), #fix so isn't redundant
+      political = as.integer(d$answers$data$political)
+      ) %>% 
+    group_by(prompt) %>% 
+    mutate(average = mean(c(should, rightwrong), na.rm = TRUE)) %>% 
+    ungroup() %>% 
+    gather(key = measure, value = value, should, rightwrong, average) 
+  
+  inherence_data <-
+    tibble(
+      id = d$WorkerId,
+      prompt = c(d$answers$data$prompts_inherence1, 
+                 d$answers$data$prompts_inherence2, 
+                 d$answers$data$prompts_inherence3, 
+                 d$answers$data$prompts_inherence4, 
+                 d$answers$data$prompts_inherence5, 
+                 d$answers$data$prompts_inherence6, 
+                 d$answers$data$prompts_inherence7, 
+                 d$answers$data$prompts_inherence8, 
+                 d$answers$data$prompts_inherence9,
+                 d$answers$data$prompts_inherence10, 
+                 d$answers$data$prompts_inherence11, 
+                 d$answers$data$prompts_inherence12, 
+                 d$answers$data$prompts_inherence13, 
+                 d$answers$data$prompts_inherence14,
+                 d$answers$data$prompts_inherence15, 
+                 d$answers$data$prompts_inherence16),
+      prompt_type = "inherence",
+      intrinsic = as.integer(d$answers$data$intrinsic),
+      extrinsic = as.integer(d$answers$data$extrinsic),
+      education = as.integer(d$answers$data$education),
+      political = as.integer(d$answers$data$political)
+    ) %>% 
+    gather(key = measure, value = value, intrinsic, extrinsic)
+  
+  crt_data <-
+    tibble(
+      id = d$WorkerId,
+      prompt = c(d$answers$data$prompts_crt1,
+                 d$answers$data$prompts_crt2, 
+                 d$answers$data$prompts_crt3),
+      prompt_type = "crt",
+      crt = d$answers$data$crt,
+      education = as.integer(d$answers$data$education),
+      political = as.integer(d$answers$data$political)
+    ) %>% 
+    gather(key = measure, value = value, crt) %>% 
+    mutate(value = as.double(str_extract(value, "\\d+")))
+
+  
+  return(bind_rows(crt_data, inherence_data, ought_data))
+}
+
+for (i in 1:length(json_files)) {
+  data_path <- str_c(root_data_path, json_files[i])
+  data_participant <- get_data_from_json(data_path)
+  data <- bind_rows(data, data_participant)
+}
+```
+
+This chunk filters out participants to exclude based on the attention checks. (It's currently set to eval=false because none of my pilot data participants checked the right things.)
+```{r, eval=FALSE}
+#attention check for inherence section
+to_exclude_inherence_extrinsic <-
+  data %>% 
+  filter(prompt == attention_check_inherence,
+         measure == "extrinsic",
+         value != 3) %>% 
+  .$id
+
+to_exclude_inherence_intrinsic <-
+  data %>% 
+  filter(prompt == attention_check_inherence,
+         measure == "intrinsic",
+         value != 5) %>% 
+  .$id
+
+to_exclude_ought_should <-
+  data %>% 
+  filter(prompt == attention_check_ought,
+         measure == "should",
+         value != 0) %>% 
+  .$id
+
+to_exclude_ought_rightwrong <-
+  data %>% 
+  filter(prompt == attention_check_ought,
+         measure == "rightwrong",
+         value != 0) %>% 
+  distinct(id)
+
+to_exclude <- c(to_exclude_inherence_extrinsic, 
+                to_exclude_inherence_intrinsic, 
+                to_exclude_ought_should, 
+                to_exclude_ought_rightwrong)
+
+data <-
+  data %>% 
+  filter(!(id %in% to_exclude))
+```
+
+
+Get the inherence score for each participant:
+```{r}
+inherence_scores <-
+  data %>% 
+  group_by(id) %>% 
+  filter(prompt_type == "inherence") %>% 
+  spread(measure, value) %>% 
+  summarise(inherence_measure = sum(intrinsic) - sum(extrinsic))
+```
+
+Get the CRT score for each participant:
+```{r}
+#fix: there's an easier way to do this 
+grade_nurse_crt <-
+  data %>% 
+  filter(prompt_type == "crt",
+         str_detect(prompt, "nurses")) %>% 
+  mutate(nurse_score = ifelse(near(value, 2.00), 1, 0))
+
+grade_salad_crt <-
+  data %>% 
+  filter(prompt_type == "crt",
+         str_detect(prompt, "salad")) %>% 
+  mutate(salad_score = ifelse(near(value, 2.25), 1, 0))
+
+grade_sally_crt <-
+  data %>% 
+  filter(prompt_type == "crt",
+         str_detect(prompt, "Sally")) %>% 
+  mutate(sally_score = ifelse(near(value, 5.00), 1, 0))
+
+crt_scores <-
+  grade_nurse_crt %>% 
+  left_join(grade_salad_crt, by = "id") %>% 
+  left_join(grade_sally_crt, by = "id") %>% 
+  group_by(id) %>% 
+  summarise(crt_score = sum(sally_score, nurse_score, salad_score)/3) 
+```
+
+
+Remove attention checks, select out prompt, add in inherence scores and crt scores and typicality. 
+```{r}
+data_final <-
+  data %>%
+  filter(prompt != attention_check_inherence,
+         prompt != attention_check_ought) %>%
+  group_by(id) %>% 
+  left_join(inherence_scores, by = "id") %>% 
+  left_join(crt_scores, by = "id") %>% 
+  filter(measure == "average") %>% 
+  mutate(typicality = ifelse(prompt %in% typicals, 1, 0))
+```
+
+Linear mixed effects model. Random effects: subjects and items
+```{r}
+fit <- lmer(value ~ inherence_measure*typicality  + (1 | id) + (1 | prompt), data = data_final)
+summary(fit)
+```
+

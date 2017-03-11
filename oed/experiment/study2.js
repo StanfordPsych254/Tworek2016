@@ -165,22 +165,86 @@ var slider_should_moved = false;
 var experiment = {
     // The object to be submitted.
     data: {
-      prompts_ought: [],
-      prompts_inherence: [],
-      prompts_crt: [],
-      intrinsic: [],
-      extrinsic: [],
+      condition: [],
+      prompts_ought1: [],
+      prompts_ought2: [],
+      prompts_ought3: [],
+      prompts_ought4: [],
+      prompts_ought5: [],
+      prompts_ought6: [],
+      prompts_ought7: [],
+      prompts_ought8: [],
+      prompts_ought9: [],
+      prompts_ought10: [],
+      prompts_ought11: [],
+      prompts_ought12: [],
+      prompts_ought13: [],
+      prompts_inherence1: [],
+      prompts_inherence2: [],
+      prompts_inherence3: [],
+      prompts_inherence4: [],
+      prompts_inherence5: [],
+      prompts_inherence6: [],
+      prompts_inherence7: [],
+      prompts_inherence8: [],
+      prompts_inherence9: [],
+      prompts_inherence10: [],
+      prompts_inherence11: [],
+      prompts_inherence12: [],
+      prompts_inherence13: [],
+      prompts_inherence14: [],
+      prompts_inherence15: [],
+      prompts_inherence16: [],
+      prompts_crt1: [],
+      prompts_crt2: [],
+      prompts_crt3: [],
       should: [],
       rightwrong: [],
       education: [],
       political: [],
-      crt: []
+      intrinsic: [],
+      extrinsic: [],
+      crt: [],
+      age: [],
+      ethnicity: [],
+      comments: [],
+      gender: []
     },
     
     start:function() {
-        experiment.data.prompts_ought.push(sents_ought);
-        experiment.data.prompts_inherence.push(sents_inherence);
-        experiment.data.prompts_crt.push(sents_crt);
+        experiment.data.condition.push(parts);
+        experiment.data.prompts_ought1.push(sents_ought[0][0][0]);
+        experiment.data.prompts_ought2.push(sents_ought[1][0][0]);
+        experiment.data.prompts_ought3.push(sents_ought[2][0][0]);
+        experiment.data.prompts_ought4.push(sents_ought[3][0][0]);
+        experiment.data.prompts_ought5.push(sents_ought[4][0][0]);
+        experiment.data.prompts_ought6.push(sents_ought[5][0][0]);
+        experiment.data.prompts_ought7.push(sents_ought[6][0][0]);
+        experiment.data.prompts_ought8.push(sents_ought[7][0][0]);
+        experiment.data.prompts_ought9.push(sents_ought[8][0][0]);
+        experiment.data.prompts_ought10.push(sents_ought[9][0][0]);
+        experiment.data.prompts_ought11.push(sents_ought[10][0][0]);
+        experiment.data.prompts_ought12.push(sents_ought[11][0][0]);
+        experiment.data.prompts_ought13.push(sents_ought[12][0][0]);
+        experiment.data.prompts_inherence1.push(sents_inherence[0][0]);
+        experiment.data.prompts_inherence2.push(sents_inherence[1][0]);
+        experiment.data.prompts_inherence3.push(sents_inherence[2][0]);
+        experiment.data.prompts_inherence4.push(sents_inherence[3][0]);
+        experiment.data.prompts_inherence5.push(sents_inherence[4][0]);
+        experiment.data.prompts_inherence6.push(sents_inherence[5][0]);
+        experiment.data.prompts_inherence7.push(sents_inherence[6][0]);
+        experiment.data.prompts_inherence8.push(sents_inherence[7][0]);
+        experiment.data.prompts_inherence9.push(sents_inherence[8][0]);
+        experiment.data.prompts_inherence10.push(sents_inherence[9][0]);
+        experiment.data.prompts_inherence11.push(sents_inherence[10][0]);
+        experiment.data.prompts_inherence12.push(sents_inherence[11][0]);
+        experiment.data.prompts_inherence13.push(sents_inherence[12][0]);
+        experiment.data.prompts_inherence14.push(sents_inherence[13][0]);
+        experiment.data.prompts_inherence15.push(sents_inherence[14][0]);
+        experiment.data.prompts_inherence16.push(sents_inherence[15][0]);
+        experiment.data.prompts_crt1.push(sents_crt[0]);
+        experiment.data.prompts_crt2.push(sents_crt[1]);
+        experiment.data.prompts_crt3.push(sents_crt[2]);
         experiment.next();
     },
 
@@ -189,6 +253,8 @@ var experiment = {
         $("#testMessage").html('');   // clear the test message
         $("#testSliderMessage").html('');   // clear the test message
         $("#testCRTMessage").html('');   // clear the test message
+        $("#testDemographicMessage").html('');   // clear the test message
+        $("#testDebriefingMessage").html('');   // clear the test message
     },
 
 
@@ -252,10 +318,10 @@ var experiment = {
     log_response_ought: function() {
       var slider_should = document.getElementById("range1");
       var slider_rightwrong = document.getElementById("range2");
-      if (slider_should_moved == false | slider_rightwrong_moved == false) {
-          $("#testSliderMessage").html('<font color="red">' + 'Please make a response!' + '</font>');
-      }
-      else{
+      //if (slider_should_moved == false | slider_rightwrong_moved == false) {
+          //$("#testSliderMessage").html('<font color="red">' + 'Please make a response!' + '</font>');
+      //}
+      //else{
         //push data
         experiment.data.should.push(slider_should.value);
         experiment.data.rightwrong.push(slider_rightwrong.value);
@@ -265,7 +331,7 @@ var experiment = {
         slider_rightwrong.value = slider_should.defaultValue;
 
         experiment.next();
-      }
+     // }
     },
 
     log_response_demographic: function() {
@@ -288,12 +354,32 @@ var experiment = {
             }
         }
 
-        if (response_logged_political == false| response_logged_ed == false) {
-            $("#testDemographicMessage").html('<font color="red">' + 'Please make a response!' + '</font>');
+        if (response_logged_political == false | response_logged_ed == false) {
+            $("#testDemographicMessage").html('<font color="red">' + 'Please answer all questions.' + '</font>');
         }
         else {
-          experiment.end();
+          experiment.run_debriefing_section();
         }
+    },
+
+    log_response_debriefing: function() {
+        var age = document.getElementsByName("age").value;
+        var gender = document.getElementsByName("gender").value;
+        var ethnicity = document.getElementsByName("ethnicity").value;
+        var comments = document.getElementsByName("comments").value;
+
+       // if(age == undefined | gender == undefined | ethnicity == undefined) {
+         // $("#testDebriefingMessage").html('<font color="red">' + 'Please answer all questions.' + '</font>');
+        //}
+        //else {
+          experiment.data.age.push(age);
+          experiment.data.gender.push(gender);
+          experiment.data.ethnicity.push(ethnicity);
+          experiment.data.comments.push(comments);
+
+          experiment.hide_test_messages();
+          experiment.end();         
+        //}
     },
     
     // The work horse of the sequence - what to do on every trial.
@@ -368,7 +454,7 @@ var experiment = {
           experiment.next();
         }
         else{
-          $("#description").html(prompts[0][0]); //change to randomize between typical and atypical
+          $("#description").html(prompts[0][0]); 
           $("#question1").html(prompts[0][1]);
           $("#question2").html(prompts[0][2]);
           showSlide("ought");
@@ -392,9 +478,12 @@ var experiment = {
       showSlide("demographic");
     },
 
+    run_debriefing_section: function() {
+      showSlide("debriefing");
+    },
+
     end: function() {
       showSlide("finished");
-      setTimeout(function() { turk.submit(experiment.data) }, 1500);
-      //JSON.stringify(experiment.data);
+      setTimeout(function() { turk.submit(experiment.data) });
     }
 }

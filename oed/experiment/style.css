@@ -140,6 +140,11 @@ label {
 .checkboxgroup label {
   display: block;
 }
+#debriefing label.error {
+  color: red;
+  margin-left: .5em;
+  display: none;
+
 /*.slider{
 	width: 200px !important;
 }*/

@@ -24,12 +24,13 @@ To view the experiment, click here: http://web.stanford.edu/~skaltman/study2.htm
 
 ###Power Analysis
 
-The original study (n = 112) found that the interaction between the measure of inherence bias and behavior typicality was a significant predictor of the measure of ought inferences ($b$ = 2.44, 95% CI = [.78, 4.10]). The original study used a linear mixed-effects model. I estimated the effect size by calculating Cohens $d_z$ for the difference between the predictor and 0 ($d_z = 0.27$). The original power to detect this effect was .81. To achieve 80% power, a sample size of 110 is needed. To achieve 90% power, a sample size of 147 is needed. To achieve 95% power, a sample size of 181 is needed. 
+The original study (n = 112) found that the interaction between the measure of inherence bias and behavior typicality was a significant predictor of the measure of ought inferences ($b$ = 2.44, 95% CI = [.78, 4.10]). The original study used a linear mixed-effects model. I estimated the effect size by calculating Cohen's $d_z$ for the difference between the coefficient and 0 ($d_z = 0.27$). The original power to detect this effect was .81. To achieve 80% power, a sample size of 110 is needed. To achieve 90% power, a sample size of 147 is needed. To achieve 95% power, a sample size of 181 is needed. 
 
 ###Planned Sample
 
-The planned sample size is 130. 
+The original study tested a total of 168 participants and excluded 27 (16% of all participants) because they were either outside the US, failed 2 or more of the attention checks, or because they indicated during the debriefing that they were not paying attention. 
 
+If I plan to exclude the same number of participants, I would need to run 130 participants. 
 
 ###Materials
 
@@ -102,7 +103,7 @@ json_files <- list.files("~/GitHub/Psych254/Tworek2016/sandbox-results/")
 root_data_path <- "~/GitHub/Psych254/Tworek2016/sandbox-results/"
 ```
 
-#### Data exclusion/filtering
+####Create data frame and tidy data
 ```{r}
 data <- tibble()
 
@@ -125,7 +126,11 @@ get_data_from_json <- function(data_path) {
       should = as.integer(d$answers$data$should),
       rightwrong = as.integer(d$answers$data$rightwrong),
       education = as.integer(d$answers$data$education), #fix so isn't redundant
-      political = as.integer(d$answers$data$political)
+      political = as.integer(d$answers$data$political),
+      #age = as.integer(d$answers$data$age),
+      #gender = d$answers$data$gender,
+      #race = d$answers$data$ethnicity,
+      #comments = d$answers$data$comments
       ) %>% 
     group_by(prompt) %>% 
     mutate(average = mean(c(should, rightwrong), na.rm = TRUE)) %>% 
@@ -147,7 +152,11 @@ get_data_from_json <- function(data_path) {
       intrinsic = as.integer(d$answers$data$intrinsic),
       extrinsic = as.integer(d$answers$data$extrinsic),
       education = as.integer(d$answers$data$education),
-      political = as.integer(d$answers$data$political)
+      political = as.integer(d$answers$data$political),
+      #age = as.integer(d$answers$data$age),
+      #gender = d$answers$data$gender,
+      #race = d$answers$data$ethnicity,
+      #comments = d$answers$data$comments
     ) %>% 
     gather(key = measure, value = value, intrinsic, extrinsic)
   
@@ -159,7 +168,11 @@ get_data_from_json <- function(data_path) {
       prompt_type = "crt",
       crt = d$answers$data$crt,
       education = as.integer(d$answers$data$education),
-      political = as.integer(d$answers$data$political)
+      political = as.integer(d$answers$data$political),
+      #age = as.integer(d$answers$data$age),
+      #gender = d$answers$data$gender,
+      #race = d$answers$data$ethnicity,
+      #comments = d$answers$data$comments
     ) %>% 
     gather(key = measure, value = value, crt) %>% 
     mutate(value = as.double(str_extract(value, "\\d+")))
@@ -176,7 +189,7 @@ for (i in 1:length(json_files)) {
 }
 ```
 
-Data exclusion for attention check failures:
+#### Data exclusion/filtering
 ```{r, eval=FALSE}
 #attention check for inherence section
 to_exclude_inherence_extrinsic <-
@@ -217,7 +230,7 @@ data <-
   filter(!(id %in% to_exclude))
 ```
 
-#### Prepare data for analysis - create columns etc.
+#### Prepare data for analysis
 The following creates a tibble of the inherence scores for each participant:
 ```{r}
 inherence_scores <-
@@ -225,7 +238,7 @@ inherence_scores <-
   group_by(id) %>% 
   filter(prompt_type == "inherence") %>% 
   spread(measure, value) %>% 
-  summarise(inherence_measure = sum(intrinsic) - sum(extrinsic))
+  summarise(inherence_bias = sum(intrinsic) - sum(extrinsic))
 ```
 
 The following creates a tibble of the CRT for each participant:
@@ -272,7 +285,8 @@ data_scores <-
   group_by(id) %>% 
   left_join(inherence_scores, by = "id") %>% 
   left_join(crt_scores, by = "id") %>% 
-  filter(measure == "average") 
+  filter(measure == "average") %>% 
+  rename(ought_inference = value)
 ```
 
 Add in binary typicality measure for each prompt:
@@ -287,10 +301,55 @@ data_final <-
 As detailed in the original paper, we fit a linear mixed-effects model with subjects and items as random intercept effects. 
 ```{r}
 #Currently p > n so we can't fit the full model-when more data is collected it will fit the full model
-fit <- lmer(value ~ inherence_measure*typicality + crt_score*typicality + education*typicality + political*typicality + (1 | id) + (1 | prompt), data = data_final)
+fit <- lmer(ought_inference ~ inherence_bias*typicality + 
+              crt_score*typicality + education*typicality + 
+              political*typicality + (1 | id) + (1 | prompt), 
+            data = data_final)
+
+summary(fit)
 ```
 
+```{r}
+mean_ib <- mean(data_final$inherence_bias, na.rm = TRUE)
+sd_ib <- sd(data_final$inherence_bias, na.rm = TRUE)
 
+#calculates if the inherence bias is one sd over the mean, one sd under the mean, or neither
+find_ib_group <- function(inherence_bias) {
+  if (inherence_bias <= mean_ib - sd_ib) {return("below")}
+  if (inherence_bias >= mean_ib + sd_ib) {return("above")}
+  else {return("NA")}
+}
+
+by_ib_group <-
+  data_final %>% 
+  mutate(inherence_bias_group = 
+           map_chr(inherence_bias, find_ib_group)) %>% 
+  filter(inherence_bias_group != "NA") %>% 
+  group_by(inherence_bias_group, typicality) %>% 
+  summarise(mean_ought_inference = 
+              mean(ought_inference, na.rm = TRUE),
+            se = sd(ought_inference, na.rm = TRUE)/sqrt(n()))
+
+#plot
+by_ib_group %>% 
+  ggplot(aes(inherence_bias_group, mean_ought_inference, linetype = as.factor(typicality))) +
+  geom_point() +
+  geom_errorbar(aes(ymin = mean_ought_inference - se, 
+                    ymax = mean_ought_inference + se),
+                size = .25, width = .05) +
+  geom_line(aes(group = typicality)) +
+  labs(y = "Ought Inference (0-100)",
+       x = NULL) +
+  scale_x_discrete(labels = c("Weak Inherence Bias\n(1 SD Below the\nMean)", "Strong Inherence Bias\n(1 SD Above the\nMean)")) +
+  scale_y_continuous(breaks = seq(0, 100, 20)) +
+  coord_cartesian(ylim = c(40, 60)) + #this will change--it's too hard to see the errorbars otherwise
+  #coord_cartesian(ylim = c(0, 100)) +
+  scale_linetype_discrete(name = NULL, labels = c("Atypical behaviors", "Typical behaviors"))
+```
+
+Original plot:
+
+![Original plot](http://web.stanford.edu/~skaltman/original_plot.png)
 ###Exploratory analyses
 
 Any follow-up analyses desired (not required).  

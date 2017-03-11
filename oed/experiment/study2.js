@@ -363,10 +363,16 @@ var experiment = {
     },
 
     log_response_debriefing: function() {
-        var age = document.getElementsByName("age").value;
-        var gender = document.getElementsByName("gender").value;
-        var ethnicity = document.getElementsByName("ethnicity").value;
-        var comments = document.getElementsByName("comments").value;
+        var age_selector = document.getElementById("age");
+        var age = age_selector.options[age_selector.selectedIndex].text;
+
+        var gender_selector = document.getElementById("gender");
+        var gender = gender_selector.options[gender_selector.selectedIndex].text;
+
+        var ethnicity_selector = document.getElementById("ethnicity");
+        var ethnicity = ethnicity_selector.options[ethnicity_selector.selectedIndex].text;
+
+        var comments = document.getElementById("expcomments").value;
 
        // if(age == undefined | gender == undefined | ethnicity == undefined) {
          // $("#testDebriefingMessage").html('<font color="red">' + 'Please answer all questions.' + '</font>');

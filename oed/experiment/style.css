@@ -61,9 +61,6 @@ button[disabled] {
 	cursor: not-allowed;
 }
 
-
-
-
 /* ## Experiment-specific styles */
 /* This stuff will vary by experiment. */
 #logo-text {
@@ -72,15 +69,6 @@ button[disabled] {
 
 #instructions {
   text-align: center;
-}
-
-#odd-key, #even-key {
-  background-color: #e3e3e3;
-  padding: 2px;
-  border: 1px outset #cccccc;
-  font-family: Courier New;
-  font-weight: bold;
-  font-size: 15px;
 }
 
 .block-text {
@@ -113,10 +101,34 @@ td {
 	font-size: 16px;
 }
 
-.likert{
- display: inline-block;
-
+#sentence_intrinsic {
+	width: 500px;
 }
+
+#sentence_extrinsic {
+	width: 500px;
+}
+
+#crt_question {
+	width: 500px;
+}
+
+#description {
+	width: 500px;
+}
+
+#question1 {
+	width: 500px;
+}
+
+#question2 {
+	width: 500px;
+}
+
+#slider {
+	width: 200px !important;
+}
+
 label {
   display: block;
   text-align: center;
@@ -144,7 +156,10 @@ label {
   color: red;
   margin-left: .5em;
   display: none;
-
-/*.slider{
-	width: 200px !important;
-}*/
+}
+#slider0 { 
+	width: 600px;
+    height: 12px;
+    position: relative;
+    margin: 5px; 
+}

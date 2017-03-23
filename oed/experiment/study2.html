@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Psychology Survey</title>
 <script src="jquery-1.11.2.min.js"></script>
-<script src="js/foundation/foundation.slider.js"></script>
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
 <script src="mmturkey-0.6.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="style.css" />
@@ -95,40 +97,40 @@
 
 <div id="checkboxes" align="center">
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_e" value = "1" id="rb1" />
-    <label for="rb1">1</label>
+    <input type="radio" name="judgment_e" value = "1" id="rb1.2" />
+    <label for="rb1.2">1</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_e" value = "2" id="rb2" />
-    <label for="rb2">2</label>
+    <input type="radio" name="judgment_e" value = "2" id="rb2.2" />
+    <label for="rb2.2">2</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_e" value = "3" id="rb3" />
-    <label for="rb3">3</label>
+    <input type="radio" name="judgment_e" value = "3" id="rb3.2" />
+    <label for="rb3.2">3</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_e" value = "4" id="rb4" />
-    <label for="rb4">4</label>
+    <input type="radio" name="judgment_e" value = "4" id="rb4.2" />
+    <label for="rb4.2">4</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_e" value = "5" id="rb5" />
-    <label for="rb5">5</label>
+    <input type="radio" name="judgment_e" value = "5" id="rb5.2" />
+    <label for="rb5.2">5</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_e" value = "6" id="rb6" />
-    <label for="rb6">6</label>
+    <input type="radio" name="judgment_e" value = "6" id="rb6.2" />
+    <label for="rb6.2">6</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_e" value = "7" id="rb7" />
-    <label for="rb7">7</label>
+    <input type="radio" name="judgment_e" value = "7" id="rb7.2" />
+    <label for="rb7.2">7</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_e" value = "8" id="rb8" />
-    <label for="rb8">8</label>
+    <input type="radio" name="judgment_e" value = "8" id="rb8.2" />
+    <label for="rb8.2">8</label>
   </div>
   <div class="checkboxgroup">
-    <input type="radio" name="judgment_e" value = "9" id="rb9" />
-    <label for="rb9">9</label>
+    <input type="radio" name="judgment_e" value = "9" id="rb9.2" />
+    <label for="rb9.2">9</label>
   </div>
 </div>
 
@@ -169,13 +171,23 @@
       <p id ="question1">{{}}</p> 
     </div>
 
-    <span class="left">0</span> 
+    <table width="850" cellspacing="0" cellpadding="0" border="0" align="center">
+      <tbody>
+        <tr>
+          <td align="center" colspan="7">
+          <div id="slider0">&nbsp;</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+<!--     <span class="left">0</span> 
     <span class="right">100</span>​
     <span class="slider">
       <input type="range" name="rangeInputRightWrong" min="0" max="100" value = "0" onchange="experiment.record_rightwrong_slider_change()" class="slider" id="range1">
     </span>
     <span class="left">Wrong</span>
-    <span class="right">Right</span>​
+    <span class="right">Right</span>​ -->
 
     <br>
     <br>
@@ -243,7 +255,7 @@
  <!-- The demographic info slide. -->
  <div class="slide" id="demographic">
 
-  <p> What is your highest level of education? </p>
+  <p class = "question"> What is your highest level of education? </p>
    <form onsubmit="experiment.submitcomments()">
    <table align = "center">
     <tr>
@@ -266,21 +278,47 @@
       </tr>
 </table>
 
-   <p> How would you describe your political attitudes?</p>
-   <p>1 = strongly liberal; 5 = Moderate; 9 = strongly conservative</p>
+<br>
+<br>
+
+   <p class = "question"> How would you describe your political attitudes?</p>
       <table align = "center"><tr>
         <td align="center">
         <tr>
-          <td> </td>
-          <td><input type="radio" name="political" value = "1">1</td>
-          <td><input type="radio" name="political" value = "2">2</td>
-          <td><input type="radio" name="political" value = "3">3</td>
-          <td><input type="radio" name="political" value = "4">4</td>
-          <td><input type="radio" name="political" value = "5">5</td>
-          <td><input type="radio" name="political" value = "6">6</td>
-          <td><input type="radio" name="political" value = "7">7</td>
-          <td><input type="radio" name="political" value = "8">8</td>
-          <td><input type="radio" name="political" value = "9">9</td>
+          <td></td>
+          <td><input type="radio" name="political" value = "1"></td>
+          <td><input type="radio" name="political" value = "2"></td>
+          <td><input type="radio" name="political" value = "3"></td>
+          <td><input type="radio" name="political" value = "4"></td>
+          <td><input type="radio" name="political" value = "5"></td>
+          <td><input type="radio" name="political" value = "6"></td>
+          <td><input type="radio" name="political" value = "7"></td>
+          <td><input type="radio" name="political" value = "8"></td>
+          <td><input type="radio" name="political" value = "9"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td>6</td>
+          <td>7</td>
+          <td>8</td>
+          <td>9</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Strongly liberal</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>Moderate</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>Strongly conservative</td>
         </tr>
       </table>
 
@@ -296,7 +334,7 @@
 </div>
 
  <!-- The debriefing slide. -->
- <div class="slide" id="debriefing">
+ <div class="slide" id="debriefing" align="center">
    <div class="question">
      <p><b>What is your age?</b>
       </p>
@@ -314,6 +352,9 @@
       </select>
     </div>
 
+    <br>
+    <br>
+
    <div class="question">
      <p>
        <b>What is your gender?</b>
@@ -326,6 +367,9 @@
         <option value="no_answer">Prefer not to answer</option>
       </select>
    </div>
+
+    <br>
+    <br>
 
     <div class="question">
      <p>
@@ -343,9 +387,12 @@
       </select>
     </div>
 
+    <br>
+    <br>
+
   <div class="question">
      <p><b>Did you run into any issues?</b></p>
-     <textarea type="textarea" id="expcomments" style="width:100%" name="comments"></textarea>
+     <textarea type="textarea" id="expcomments" style="width:70%" name="comments"></textarea>
    </div>
   
   <div align="center">

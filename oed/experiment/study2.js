@@ -1,21 +1,5 @@
 // ############################## Helper functions ##############################
- $("#slider0").slider({
-               animate: true,
-               max: 25 , min: 1, step: 1, value: 13,
-               slide: function( event, ui ) {
-                   $("#slider0 .ui-slider-handle").css({
-                      "background":"#E0F5FF",
-                      "border-color": "#001F29"
-                   });
-               },
-               change: function( event, ui ) {
-                   $('#hiddenSliderValue0').attr('value', ui.value);
-                   $("#slider0").css({"background":"#99D6EB"});
-                   $("#slider0 .ui-slider-handle").css({
-                     "background":"#667D94",
-                     "border-color": "#001F29" });
-                   displaySubmitButton();
-               }});
+
 // Shows slides. We're using jQuery here - the **$** is the jQuery selector function, which takes as input either a DOM element or a CSS selector string.
 function showSlide(id) {
   // Hide all slides
@@ -84,7 +68,7 @@ var sents_crt = ['If it takes 2 nurses 2 minutes to measure the blood pressure o
 'Sally is making sun tea. Every hour, the concentration of the tea doubles. If it takes 6 hours for the tea to be ready, how long would it take for the tea to reach half of the final concentration?'];
 
 //prompts for inherence testing 
-var sents_inherence = [['We use red in traffic lights to mean ""stop"" because of something about the color red or about stop lights—maybe the color red inherently acts as a warning.','We use red in traffic lights to mean "stop" because of some historical or contextual reason— maybe the color was arbitrarily assigned to this meaning a long time ago and we simply continued using it since.'],
+var sents_inherence = [['We use red in traffic lights to mean "stop" because of something about the color red or about stop lights—maybe the color red inherently acts as a warning.','We use red in traffic lights to mean "stop" because of some historical or contextual reason— maybe the color was arbitrarily assigned to this meaning a long time ago and we simply continued using it since.'],
 
 ['Parents and children sleep in different beds because of something about the parent-child relationship or about the act of sleeping in separate beds—maybe one of the critical components of the parent-child relationship is teaching children independence.', 'Parents and children sleep in different beds because of some historical or contextual reason— maybe it became popular to sleep in separate beds when wealthy people began to have nannies who would watch children at night.'],
 
@@ -181,6 +165,7 @@ var slider_should_moved = false;
 var experiment = {
     // The object to be submitted.
     data: {
+      condition: [],
       prompts_ought1: [],
       prompts_ought2: [],
       prompts_ought3: [],

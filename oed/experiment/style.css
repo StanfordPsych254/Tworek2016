@@ -61,6 +61,9 @@ button[disabled] {
 	cursor: not-allowed;
 }
 
+
+
+
 /* ## Experiment-specific styles */
 /* This stuff will vary by experiment. */
 #logo-text {
@@ -69,6 +72,15 @@ button[disabled] {
 
 #instructions {
   text-align: center;
+}
+
+#odd-key, #even-key {
+  background-color: #e3e3e3;
+  padding: 2px;
+  border: 1px outset #cccccc;
+  font-family: Courier New;
+  font-weight: bold;
+  font-size: 15px;
 }
 
 .block-text {
@@ -125,10 +137,10 @@ td {
 	width: 500px;
 }
 
-#slider {
-	width: 200px !important;
-}
+.likert{
+ display: inline-block;
 
+}
 label {
   display: block;
   text-align: center;
@@ -156,10 +168,7 @@ label {
   color: red;
   margin-left: .5em;
   display: none;
-}
-#slider0 { 
-	width: 600px;
-    height: 12px;
-    position: relative;
-    margin: 5px; 
-}
+
+/*.slider{
+	width: 200px !important;
+}*/

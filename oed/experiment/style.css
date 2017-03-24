@@ -167,7 +167,10 @@ label {
 #debriefing label.error {
   color: red;
   margin-left: .5em;
-  display: none;
+  display: none;}
+#sliderclass {
+	width: 400px;
+}
 
 /*.slider{
 	width: 200px !important;

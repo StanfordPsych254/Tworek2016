@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Psychology Survey</title>
 <script src="jquery-1.11.2.min.js"></script>
-<script src="js/foundation/foundation.slider.js"></script>
 <script src="mmturkey-0.6.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="style.css" />
@@ -43,47 +42,45 @@
 </div>
 <div align="center">
   <p id ="sentence_intrinsic">{{}}</p> 
-  <p>1 = Strongly disagree; 9 = Strongly agree</p>
 </div>
-
 <br>
 
 <div id="checkboxes" align="center">
   <div class="checkboxgroup">
     <input type="radio" name="judgment_i" value = "1" id="rb1" />
-    <label for="rb1">1</label>
+    <label for="rb1" style="font-size:12px">Strongly<br>disagree</label>
   </div>
   <div class="checkboxgroup">
     <input type="radio" name="judgment_i" value = "2" id="rb2" />
-    <label for="rb2">2</label>
+    <label for="rb2" style="font-size:12px">Disagree<br>&nbsp</label>
   </div>
   <div class="checkboxgroup">
     <input type="radio" name="judgment_i" value = "3" id="rb3" />
-    <label for="rb3">3</label>
+    <label for="rb3" style="font-size:12px">Moderately<br>disagree</label>
   </div>
   <div class="checkboxgroup">
     <input type="radio" name="judgment_i" value = "4" id="rb4" />
-    <label for="rb4">4</label>
+    <label for="rb4" style="font-size:12px">Mildly<br>disagree</label>
   </div>
   <div class="checkboxgroup">
     <input type="radio" name="judgment_i" value = "5" id="rb5" />
-    <label for="rb5">5</label>
+    <label for="rb5" style="font-size:12px">Neither agree<br>nor disagree</label>
   </div>
   <div class="checkboxgroup">
     <input type="radio" name="judgment_i" value = "6" id="rb6" />
-    <label for="rb6">6</label>
+    <label for="rb6" style="font-size:12px">Mildly<br>agree</label>
   </div>
   <div class="checkboxgroup">
     <input type="radio" name="judgment_i" value = "7" id="rb7" />
-    <label for="rb7">7</label>
+    <label for="rb7" style="font-size:12px">Moderately<br>agree</label>
   </div>
   <div class="checkboxgroup">
     <input type="radio" name="judgment_i" value = "8" id="rb8" />
-    <label for="rb8">8</label>
+    <label for="rb8" style="font-size:12px">Agree<br>&nbsp</label>
   </div>
   <div class="checkboxgroup">
     <input type="radio" name="judgment_i" value = "9" id="rb9" />
-    <label for="rb9">9</label>
+    <label for="rb9" style="font-size:12px">Strongly<br>agree</label>
   </div>
 </div>
 
@@ -91,45 +88,44 @@
 
 <div align="center">
   <p id ="sentence_extrinsic">{{}}</p> 
-  <p>1 = Strongly disagree; 9 = Strongly agree</p>
 </div>
 
 <div id="checkboxes" align="center">
   <div class="checkboxgroup">
     <input type="radio" name="judgment_e" value = "1" id="rb1.2" />
-    <label for="rb1.2">1</label>
+    <label for="rb1.2" style="font-size:12px">Strongly<br>disagree</label>
   </div>
   <div class="checkboxgroup">
     <input type="radio" name="judgment_e" value = "2" id="rb2.2" />
-    <label for="rb2.2">2</label>
+    <label for="rb2.2" style="font-size:12px">Disagree<br>&nbsp</label>
   </div>
   <div class="checkboxgroup">
     <input type="radio" name="judgment_e" value = "3" id="rb3.2" />
-    <label for="rb3.2">3</label>
+    <label for="rb3.2" style="font-size:12px">Moderately<br>disagree</label>
   </div>
   <div class="checkboxgroup">
     <input type="radio" name="judgment_e" value = "4" id="rb4.2" />
-    <label for="rb4.2">4</label>
+    <label for="rb4.2" style="font-size:12px">Mildly<br>disagree</label>
   </div>
   <div class="checkboxgroup">
     <input type="radio" name="judgment_e" value = "5" id="rb5.2" />
-    <label for="rb5.2">5</label>
+    <label for="rb5.2" style="font-size:12px">Neither agree<br>nor disagree</label>
   </div>
   <div class="checkboxgroup">
     <input type="radio" name="judgment_e" value = "6" id="rb6.2" />
-    <label for="rb6.2">6</label>
+    <label for="rb6.2" style="font-size:12px">Mildly<br>agree</label>
   </div>
   <div class="checkboxgroup">
     <input type="radio" name="judgment_e" value = "7" id="rb7.2" />
-    <label for="rb7.2">7</label>
+    <label for="rb7.2" style="font-size:12px">Moderately<br>agree</label>
   </div>
   <div class="checkboxgroup">
     <input type="radio" name="judgment_e" value = "8" id="rb8.2" />
-    <label for="rb8.2">8</label>
+    <label for="rb8.2" style="font-size:12px">Agree<br>&nbsp</label>
   </div>
   <div class="checkboxgroup">
     <input type="radio" name="judgment_e" value = "9" id="rb9.2" />
-    <label for="rb9.2">9</label>
+    <label for="rb9.2" style="font-size:12px">Strongly<br>agree</label>
   </div>
 </div>
 
@@ -170,13 +166,27 @@
       <p id ="question1">{{}}</p> 
     </div>
 
+
+<!--
+    <div  class="sliderclass">
     <span class="left">0</span> 
     <span class="right">100</span>​
     <span class="slider">
-      <input type="range" name="rangeInputRightWrong" min="0" max="100" value = "0" onchange="experiment.record_rightwrong_slider_change()" class="slider" id="range1">
+      <input type="range" name="rangeInputRightWrong" min="0" max="100" value = "200" onchange="experiment.record_rightwrong_slider_change()" class="slider" id="range1">
     </span>
     <span class="left">Wrong</span>
     <span class="right">Right</span>​
+    </div>
+
+    -->
+
+     <table align="center" width = 400>
+      <tr>
+        <td width="100" valign="top" align="right">Wrong</td>
+        <td valign="bottom" align="center" colspan="6"><input type="range" width="600px" name="rangeInputRightWrong" min="0" max="100" value = "0" onchange="experiment.record_rightwrong_slider_change()" class="slider" id="range1"></td>
+        <td width="100" valign="top" align="right">Right</td>
+      </tr>
+      </table> 
 
     <br>
     <br>
@@ -185,13 +195,14 @@
       <p id ="question2">{{}}</p> 
     </div>
 
-    <span class="left">0</span> 
-    <span class="right">100</span>​
-    <span class="slider">
-      <input type="range" name="rangeInputShould" min="0" max="100" value = "0" onchange="experiment.record_should_slider_change()" class="slider" id="range2">
-    </span>
-    <span class="left">Definitely no</span>
-    <span class="right">Definitely yes</span>​
+
+    <table align="center" width = 420>
+      <tr>
+        <td width="100" valign="top" align="right">Definitely<br>no</td>
+        <td valign="bottom" align="center" colspan="6"><input type="range" name="rangeInputShould" min="0" max="100" value = "0" onchange="experiment.record_should_slider_change()" class="slider" id="range2"></td>
+        <td width="100" valign="top" align="right">Definitely<br>yes</td>
+      </tr>
+      </table> 
 
   <table align="center"><tr>
   <td align="center">

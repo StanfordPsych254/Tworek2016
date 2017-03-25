@@ -10,7 +10,6 @@ output:
       collapsed: false
 ---
 
-<!-- Replication reports should all use this template to standardize reporting across projects.  These reports will be public supplementary materials that accompany the summary report(s) of the aggregate results. -->
 
 ##Introduction
 
@@ -24,13 +23,13 @@ To view the experiment, click here: http://web.stanford.edu/~skaltman/study2.htm
 
 ###Power Analysis
 
-The original study (n = 112) found that the interaction between the measure of inherence bias and behavior typicality was a significant predictor of the measure of ought inferences ($b$ = 2.44, 95% CI = [.78, 4.10]). The original study used a linear mixed-effects model. I estimated the effect size by calculating Cohen's $d_z$ for the difference between the coefficient and 0 ($d_z = 0.27$). The original power to detect this effect was .81. To achieve 80% power, a sample size of 110 is needed. To achieve 90% power, a sample size of 147 is needed. To achieve 95% power, a sample size of 181 is needed. 
+The original study (n = 112) found that the interaction between the measure of inherence bias and behavior typicality was a significant predictor of the measure of ought inferences ($b$ = 2.44, 95% CI = [.78, 4.10]). The original study used a linear mixed-effects model. We estimated the effect size by calculating Cohen's $d_z$ for the difference between the coefficient and 0 ($d_z = 0.27$). The original power to detect this effect was .81. To achieve 80% power, a sample size of 110 is needed. To achieve 90% power, a sample size of 147 is needed. To achieve 95% power, a sample size of 181 is needed. 
 
 ###Planned Sample
 
 The original study tested a total of 139 participants and excluded 27 (19% of all participants) because they were either outside the US, failed 2 or more of the attention checks, or because they indicated during the debriefing that they were not paying attention. 
 
-To achieve 80% power, I would need to run 110 participants. To account for the exclusion of approximately 19% of all participants, I will run 136 participants ($136 - 136 \times .19 = 110$). 
+To achieve 80% power, we would need to run 110 participants. To account for the exclusion of approximately 19% of all participants, we will run 136 participants ($136 - 136 \times .19 = 110$). 
 
 ###Materials
 
@@ -40,33 +39,32 @@ All materials are here: https://osf.io/4kanr/.
 
 The procedure from the original paper was followed. The text from the original paper is as follows:
 
-"Procedure. Participants were tested online via Mechan- ical Turk using Qualtrics software. The ought measure, the measure of inherence bias, and the CRT were pre- sented in random order. Item order was randomized for all scales. The measures of participants’ education and conservatism were administered with other demographic questions at the end of the survey."
+> "Procedure. Participants were tested online via Mechan- ical Turk using Qualtrics software. The ought measure, the measure of inherence bias, and the CRT were pre- sented in random order. Item order was randomized for all scales. The measures of participants’ education and conservatism were administered with other demographic questions at the end of the survey."
 
 ###Analysis Plan
 
 The analysis plan from the original paper was followed. The following is quoted from the original paper:
 
-"Analytic strategy. Because we manipulated behavior typicality within subjects, we used a multilevel model to analyze our data. The model included cross-classified random effects (specifically, intercepts) for subjects and items. Participants’ ought inferences, calculated as the average of their responses to the two ought questions on each trial, served as the dependent variable. The model included as independent variables the typicality of each stimulus behavior (0 = atypical, 1 = typical), participants’ scores on the measure of inherence bias, and the three control measures (i.e., CRT, education, and conserva- tism). The model also included the two-way interactions between behavior typicality and each of the latter four variables. We hypothesized a positive relationship between participants’ inherence bias and their ought inferences for typical—but not atypical—behaviors. Thus, our main prediction was of a significant two-way interaction between the measure of inherence bias and behavior typicality. Including the other two-way interac- tions (with CRT, education, and conservatism) in the model enabled us to explore whether the relationships between these control variables and ought inferences also differed for typical and atypical behaviors. Adjusting for these potential relationships was a conservative anal- ysis strategy; in alternative models that did not include these interactions, the predicted relationship was esti- mated to be larger in magnitude.
+> "Analytic strategy. Because we manipulated behavior typicality within subjects, we used a multilevel model to analyze our data. The model included cross-classified random effects (specifically, intercepts) for subjects and items. Participants’ ought inferences, calculated as the average of their responses to the two ought questions on each trial, served as the dependent variable. The model included as independent variables the typicality of each stimulus behavior (0 = atypical, 1 = typical), participants’ scores on the measure of inherence bias, and the three control measures (i.e., CRT, education, and conserva- tism). The model also included the two-way interactions between behavior typicality and each of the latter four variables. We hypothesized a positive relationship between participants’ inherence bias and their ought inferences for typical—but not atypical—behaviors. Thus, our main prediction was of a significant two-way interaction between the measure of inherence bias and behavior typicality. Including the other two-way interac- tions (with CRT, education, and conservatism) in the model enabled us to explore whether the relationships between these control variables and ought inferences also differed for typical and atypical behaviors. Adjusting for these potential relationships was a conservative anal- ysis strategy; in alternative models that did not include these interactions, the predicted relationship was esti- mated to be larger in magnitude.
 For ease of interpretation, we present unstandardized coefficients below. Given the coding of the behavior- typicality variable, the first-order coefficients for the measure of inherence bias, CRT, education, and conser- vatism in this model are simply the slopes of the rela- tionships between these variables and ought inferences for atypical behaviors. Moreover, the slopes for typical behaviors can easily be calculated by adding each first- order coefficient to the coefficient for the corresponding two-way interaction.Can also quote directly, though it is less often spelled out effectively for an analysis strategy section.  The key is to report an analysis strategy that is as close to the original - data cleaning rules, data exclusion rules, covariates, etc. - as possible."
 
-I will conduct a linear mixed-effects model. **The key-analysis of interest is the p-value of the coefficient for the interaction between inherence bias and typicality.**
+We will conduct a linear mixed-effects model. **The key-analysis of interest is the p-value of the coefficient for the interaction between inherence bias and typicality.**
 
 ###Differences from Original Study
 
+In addition to the exclusion criteria used in the original study, we will also exclude participants who answer "0" for both the "should" "right/wrong" questions on more than three trials in the ought inference section, in order to exclude participants who do not choose any options. 
 
 ### Methods Addendum (Post Data Collection)
 
-You can comment this section out prior to final report with data collection.
-
 #### Actual Sample
-  Sample size, demographics, data exclusions based on rules spelled out in analysis plan
+
+103 participants were recruited from Amazon Mechanical Turk (42 female; 61 male). Participants received $1.21 for participation. An additional 33 participants were tested but were excluded from analysis. 18 of these 33 were excluded because they failed two or more attention checks (out of four total) and/or answered "0" for both questions for more than 3 trials in the ought inference section. The remaining 15 were excluded because either no data was collected (n = 4) or there was a data collection error (n = 11).
 
 #### Differences from pre-data collection methods plan
-  Any differences from what was described as the original plan, or “none”.
 
+15 participants had to be excluded because of a bug in the data collection process. 
 
 ##Results
-
 
 ### Data preparation
 
@@ -80,6 +78,7 @@ library(modelr)
 library(readxl)
 library(stringr)
 library(tidyverse)
+library(forcats)
 
 #params
 attention_check_inherence <- "Intelligent organisms on Earth fully pay attention when taking surveys because of something about intelligent organisms or about taking surveys—maybe paying attention allows intelligent organisms to contribute to research productively. For this item can you please choose choice five?"
@@ -109,7 +108,7 @@ typicals <- c("Consider that children typically address their teachers with “M
 ```
 
 ```{r, message = FALSE}
-directory <- "~/GitHub/Psych254/Tworek2016/sandbox-results/csvs/"
+directory <- "~/GitHub/Psych254/Tworek2016/data/"
 csv_files <- dir(directory, pattern = ".csv")
 ```
 
@@ -137,7 +136,7 @@ get_data_from_json <- function(ID, data) {
       should = as.integer(data$should),
       rightwrong = as.integer(data$rightwrong),
       education = as.integer(data$education), #fix so isn't redundant
-      political = as.integer(data$political),
+      political = mean(as.integer(data$political)),
       age = data$age,
       gender = data$gender,
       race = data$ethnicity,
@@ -148,28 +147,28 @@ get_data_from_json <- function(ID, data) {
     ungroup() %>% 
     gather(key = measure, value = value, should, rightwrong, average) 
   
-  #gathers prompts and answers for inherence questions into a tibble
+  # #gathers prompts and answers for inherence questions into a tibble
   inherence_data <-
     tibble(
       id = ID,
-      prompt = c(data$prompts_inherence1, data$prompts_inherence2, 
-                              data$prompts_inherence3, data$prompts_inherence4, 
-                              data$prompts_inherence5, data$prompts_inherence6, 
-                              data$prompts_inherence7, data$prompts_inherence8, 
-                              data$prompts_inherence9, data$prompts_inherence10, 
-                              data$prompts_inherence11, data$prompts_inherence12, 
+      prompt = c(data$prompts_inherence1, data$prompts_inherence2,
+                              data$prompts_inherence3, data$prompts_inherence4,
+                              data$prompts_inherence5, data$prompts_inherence6,
+                              data$prompts_inherence7, data$prompts_inherence8,
+                              data$prompts_inherence9, data$prompts_inherence10,
+                              data$prompts_inherence11, data$prompts_inherence12,
                               data$prompts_inherence13, data$prompts_inherence14,
                               data$prompts_inherence15, data$prompts_inherence16),
       prompt_type = "inherence",
       intrinsic = as.integer(data$intrinsic),
       extrinsic = as.integer(data$extrinsic),
       education = as.integer(data$education),
-      political = as.integer(data$political),
+      political = mean(as.integer(data$political)),
       age = data$age,
       gender = data$gender,
       race = data$ethnicity,
       comments = data$comments
-    ) %>% 
+    ) %>%
     gather(key = measure, value = value, intrinsic, extrinsic)
   
   #gathers prompts and answers for crt questions into a tibble
@@ -181,7 +180,7 @@ get_data_from_json <- function(ID, data) {
       prompt_type = "crt",
       crt = data$crt, 
       education = as.integer(data$education),
-      political = as.integer(data$political),
+      political = mean(as.integer(data$political)),
       age = data$age,
       gender = data$gender,
       race = data$ethnicity,
@@ -209,29 +208,34 @@ get_data_from_json <- function(ID, data) {
 # }
 ```
 
-The following loops through all the csv files containing the data and creates the data frame:
+The following loops through all the csv files containing the data and creates the data frame. It also removes participants for whom data was not collected or data was collected in a faulty manner:
+
 ```{r, message = FALSE}
 for (file in csv_files) {
   jd <- read_csv(paste(paste(directory, file, sep = "")))
   jd <-
-    jd %>% 
-    mutate(data = iconv(jd$Answer.data, "latin1", "ASCII", sub = "")) %>% 
+    jd %>%
+    mutate(data = iconv(jd$Answer.data, "latin1", "ASCII", sub = "")) %>%
     select(-Answer.data)
 
   answers <- jd$data
-  file.create("answers.json")
-  fileConn <- file("answers.json")
-  writeLines(answers, fileConn)
-  close(fileConn)
-  answers <- fromJSON("answers.json")
-  data_participant <- get_data_from_json(jd$WorkerId, answers)
-  data <- bind_rows(data, data_participant)
+  if (!is.na(answers)) { #filter out subjects for whom no data was collected
+    file.create("answers.json")
+    fileConn <- file("answers.json")
+    writeLines(answers, fileConn)
+    close(fileConn)
+    answers <- fromJSON("answers.json")
+    if (length(answers$extrinsic) == 16 & length(answers$intrinsic) == 16) { #filter out subjects for whom data points were recorded twice
+      data_participant <- get_data_from_json(jd$WorkerId, answers)
+      data <- bind_rows(data, data_participant)      
+    }
+  }
 }
 ```
 
 #### Data exclusion/filtering
 
-The original paper excluded participants that failed two or more of the four attention checks. I also excluded participants who put "0" for both the should and right/wrong questions on more than 2 prompts, to eliminate participants who just clicked the "next" button without recording a response. 
+The original paper excluded participants that failed two or more of the four attention checks. We also excluded participants who put "0" for both the should and right/wrong questions on more than 2 prompts, to eliminate participants who just clicked the "next" button without recording a response. 
 
 ```{r, include = FALSE, eval=FALSE}
 to_exclude_inherence_extrinsic <-
@@ -375,7 +379,7 @@ The following is the results table from the original paper:
 
 As detailed in the original paper, we fit a linear mixed-effects model with subjects and items as random intercept effects.
 ```{r}
-fit <- lmer(ought_inference ~ inherence_bias*typicality + 
+fit <- lme4::lmer(ought_inference ~ inherence_bias*typicality + 
               crt_score*typicality + education*typicality + 
               political*typicality + (1 | id) + (1 | prompt), 
             data = data_final)
@@ -388,9 +392,10 @@ df <-
   as_tibble(summary(fit)$coef) %>% 
   mutate(Predictor = names,
          p = 2 * (1 - pnorm(abs(`t value`)))) %>% 
-  select(Predictor, everything()) 
+  dplyr::select(Predictor, everything()) 
 
 df %>% 
+  filter(Predictor != "Intercept") %>% 
   knitr::kable()
 ```
 
@@ -402,11 +407,31 @@ df %>%
   knitr::kable()
 ```
 
+We also computed the 95% confidence intervals for the coefficients, as done in the original paper:
+
+```{r, message=FALSE}
+ci <- 
+  confint.merMod(fit, level = .95) %>% 
+  as_tibble(ci) %>% 
+  slice(5:n()) %>% 
+  mutate(Predictor = c("Inherence Bias", 
+                       "Typicality", 
+                       "Cognitive Reflection Test", 
+                       "Education", "Conservatism", 
+                       "Inherence Bias x Typicality", 
+                       "Typicality x Cognitive Reflection Test", 
+                       "Typicality x Education", 
+                       "Typicality x Conservatism")) %>% 
+  dplyr::select(Predictor, everything())
+
+ci
+```
+
 Original plot:
 
 ![Original plot](http://web.stanford.edu/~skaltman/original_plot.png)
 
-I recreated the plot with the new data:
+We recreated the plot with the new data:
 
 ```{r}
 mean_ib <- mean(data_final$inherence_bias, na.rm = TRUE)
@@ -425,24 +450,27 @@ by_ib_group <-
   mutate(inherence_bias_group = 
            map_chr(inherence_bias, find_ib_group)) %>% 
   filter(inherence_bias_group != "NA") %>% 
+  group_by(inherence_bias_group, typicality, id) %>% 
+  summarise(mean_ought_inference = mean(ought_inference, na.rm = TRUE)) %>% 
   group_by(inherence_bias_group, typicality) %>% 
-  summarise(mean_ought_inference = 
-              mean(ought_inference, na.rm = TRUE),
-            se = sd(ought_inference, na.rm = TRUE)/sqrt(n()))
+  summarise(grand_mean_ought_inference = 
+              mean(mean_ought_inference, na.rm = TRUE),
+            se = sd(mean_ought_inference, na.rm = TRUE)/sqrt(n()))
 
 #recreate plot from original paper
 by_ib_group %>% 
-  ggplot(aes(inherence_bias_group, mean_ought_inference, linetype = as.factor(typicality))) +
+  ggplot(aes(fct_rev(as_factor(inherence_bias_group)),  #reverses the order of the factor levels
+             grand_mean_ought_inference, linetype = as.factor(typicality))) +
   geom_point() +
-  geom_errorbar(aes(ymin = mean_ought_inference - se, 
-                    ymax = mean_ought_inference + se),
+  geom_errorbar(aes(ymin = grand_mean_ought_inference - se, 
+                    ymax = grand_mean_ought_inference + se),
                 size = .25, width = .05) +
   geom_line(aes(group = typicality)) +
   labs(y = "Ought Inference (0-100)",
        x = NULL) +
   scale_x_discrete(labels = c("Weak Inherence Bias\n(1 SD Below the\nMean)", "Strong Inherence Bias\n(1 SD Above the\nMean)")) +
   scale_y_continuous(breaks = seq(0, 100, 20)) +
-  coord_cartesian(ylim = c(0, 100)) + #this will change--it's too hard to see the errorbars otherwise
+  coord_cartesian(ylim = c(0, 100)) +
   #coord_cartesian(ylim = c(0, 100)) +
   scale_linetype_discrete(name = NULL, labels = c("Atypical behaviors", "Typical behaviors")) +
   theme_minimal() +
@@ -450,9 +478,6 @@ by_ib_group %>%
         panel.grid.minor.y = element_blank())
 ```
 
-###Exploratory analyses
-
-Any follow-up analyses desired (not required).  
 
 ## Discussion
 
@@ -460,6 +485,39 @@ Any follow-up analyses desired (not required).
 
 Open the discussion section with a paragraph summarizing the primary result from the confirmatory analysis and the assessment of whether it replicated, partially replicated, or failed to replicate the original result.  
 
+```{r, include=FALSE}
+ib_t <- 
+  df %>% 
+  filter(Predictor == "Inherence Bias x Typicality")
+
+ib_t_coef <- round(ib_t$Estimate, 3)
+
+ib_t_ci <-
+  ci %>% 
+  filter(Predictor == "Inherence Bias x Typicality")
+
+ib_t_lower <- round(ib_t_ci$`2.5 %`, 3)
+ib_t_upper <- round(ib_t_ci$`97.5 %`, 3)
+
+con_typ <-
+  df %>% 
+  filter(Predictor == "Typicality x Conservatism") 
+
+con_typ_coef <- round(con_typ$Estimate, 3)
+
+con_typ_ci <-
+  ci %>% 
+  filter(Predictor == "Typicality x Conservatism")
+
+con_typ_lower <- round(con_typ_ci$`2.5 %`, 3)
+con_typ_upper <- round(con_typ_ci$`97.5 %`, 3)
+```
+
+
+We succesfully replicated the key finding of Tworek and Cimpian (2016). The predicted interaction between inherence bias and behavior typicality was significant in the fitted model ($b$ = `r ib_t_coef`, 95% CI = [`r ib_t_lower`, `r ib_t_upper`], $p < .001$). The predicted interaction between behavior typicality and conservatism was also significant ($b =$ `r con_typ_coef`, 95% CI = [`r con_typ_lower`, `r con_typ_upper`], $p < .001$). In the original study, conservatism was also a significant predictor, but was not in this replication.
+
 ### Commentary
 
-Add open-ended commentary (if any) reflecting (a) insights from follow-up exploratory analysis, (b) assessment of the meaning of the replication (or not) - e.g., for a failure to replicate, are the differences between original and present study ones that definitely, plausibly, or are unlikely to have been moderators of the result, and (c) discussion of any objections or challenges raised by the current and original authors about the replication attempt.  None of these need to be long.
+The calculated p-value for the interaction between inherence bias and behavior typicality was very low ($1e-7$), as was the p-value for the interaction between behavior typicality and conservatism ($6e-5$). The former is four orders of magnitude less than the p-value obtained in the original study. The p-values were obtained using the normal approximation method described in [Barr et al. (2013)](https://www.ncbi.nlm.nih.gov/pubmed/24403724). The original paper may have used a different approximation or method for obtaining the p-values. 
+
+It is also possible that the added exclusion criteria--excluding participants who answered "0" on both the ought inference questions for more than 3 trials--biased the data in some way. 
